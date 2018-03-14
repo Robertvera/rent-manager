@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin-owners-add</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
+
+        <ul class="navbar-nav px-5">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">
+                    <span data-feather="log-out"></span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="activity"></span>
+                                Overview
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="home"></span>
+                                Properties
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Leases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Tenants
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="dollar-sign"></span>
+                                Payments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="user"></span>
+                                Owners
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="credit-card"></span>
+                                Transfers
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- MAIN SCREEN -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <!-- TENANT -->
+                        <form class="col-7 p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <!-- NAME, SURNAME -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Name" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="surname">Surname</label>
+                                        <input type="text" class="form-control" id="surname" placeholder="Surname" value="">
+                                    </div>
+                                    <!-- ID, NATIONALITY -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="passport">ID/Passport</label>
+                                        <input type="text" class="form-control" id="passport" placeholder="ID/Passport" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nationality">Nationality</label>
+                                        <input type="text" class="form-control" id="nationality" placeholder="Nationality" value="">
+                                    </div>
+                                    <!-- TELEPHONE, EMAIL -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="telephone">Telephone</label>
+                                        <input type="text" class="form-control" id="telephone" placeholder="Telephone" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="email">e-mail</label>
+                                        <input type="text" class="form-control" id="email" placeholder="example@email.com" value="">
+                                    </div>
+                                    <!-- BANK ACCOUNT, PROPERTIES -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="bank-account">Bank account</label>
+                                        <input type="text" class="form-control" id="bank-account" placeholder="Bank Account" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="credit-card">Properties</label>
+                                        <select class="custom-select" name="properties" multiple>
+                                            <option value="guardia1">GUARDIA 1</option>
+                                            <option value="guardia2">AUARDIA 2</option>
+                                            <option value="guardia3">GUARDIA 3</option>
+                                            <option value="guardia4">GUARDIA 4</option>
+                                            <option value="guardia5">GUARDIA 5</option>
+                                            <option value="guardia6">RUARDIA 6</option>
+                                            <option value="guardia7">GUARDIA 7</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- SAVE BUTTON -->
+                        <div class="container-fluid col-7 p-0">
+                            <div class="row justify-content-center">
+                                <button type="button" class="btn btn-danger col-3 mb-5">SAVE</button>
+                            </div>
+                        </div>
+            </main>
+            </div>
+            </div>
+
+            <!-- Bootstrap core JavaScript  -->
+            <script src="../../vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+            <script src="../../vendor/popper/popper.min.js"></script>
+            <script src="../../vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+            <!-- Icons -->
+            <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+            <script>
+                feather.replace()
+            </script>
+</body>
+
+</html>

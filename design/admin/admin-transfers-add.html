@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin-leases-add</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
+
+        <ul class="navbar-nav px-5">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">
+                    <span data-feather="log-out"></span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="activity"></span>
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="home"></span>
+                                Properties
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Leases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Tenants
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="dollar-sign"></span>
+                                Payments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="user"></span>
+                                Owners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="credit-card"></span>
+                                Transfers
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- MAIN SCREEN -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <form class="col-7  p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <!-- PROPERTY -->
+                                    <div class="form-group col-12">
+                                        <label for="property">Property</label>
+                                        <input type="text" class="form-control" id="property" aria-describedby="property" placeholder="property" value="GUARDIA I">
+                                    </div>
+                                    <!-- CONCEPT, DATE -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="concept">Concept</label>
+                                        <input type="text" class="form-control" id="concept" placeholder="concept" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="date">Date</label>
+                                        <input type="text" class="form-control" id="date" placeholder="Date" value="">
+                                    </div>
+                                    <!-- BASE -->
+                                    <div class="form-group col-12">
+                                        <label for="base">Base</label>
+                                        <input type="text" class="form-control" id="base" placeholder="Base" value="1.200 €">
+                                    </div>
+
+                                    <!-- DEDUCTIONS -->
+                                    
+                                </div>
+                            </div>
+                        </form>
+                        <!-- TENANT -->
+                        <h4 class="col-7">DEDUCTIONS</h4>
+                        <form class="col-7 p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <!-- AMOUNT, CONCEPT -->
+                                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                                        <label for="amount">Amount</label>
+                                        <input type="text" class="form-control" id="amount" placeholder="Amount" value="120 €">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-8 col-lg-8">
+                                        <label for="concept">Concept</label>
+                                        <input type="text" class="form-control" id="concept" placeholder="Concept" value="Administration fee">
+                                    </div>                                    
+                                    <!-- ADD BUTTON -->
+                                    <button type="button" class="btn btn-success col-1 ml-3 mb-5">Add</button>                                    
+                                </div>
+                            </div>
+                        </form>
+                        <h4 class="col-7 p-0">
+                            TOTAL: 1.080 €
+                        </h4>
+
+                        <!-- SAVE BUTTON -->
+                        <div class="container-fluid col-7 p-0">
+                            <div class="row justify-content-center">
+                                <button type="button" class="btn btn-danger col-3 mb-5">SAVE</button>
+                            </div>
+                        </div>                        
+            </main>
+            </div>
+            </div>
+
+            <!-- Bootstrap core JavaScript  -->
+            <script src="../../vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+            <script src="../../vendor/popper/popper.min.js"></script>
+            <script src="../../vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+            <!-- Icons -->
+            <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+            <script>
+                feather.replace()
+            </script>
+</body>
+
+</html>

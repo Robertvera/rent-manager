@@ -15,16 +15,16 @@
     <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="tenant.css" rel="stylesheet">
+    <link href="../styles/styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Rent Manager</a>
+    <nav class="navbar navbar-dark sticky-top flex-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
 
-        <ul class="navbar-nav px-3">
+        <ul class="navbar-nav px-5">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
+                <a class="nav-link" href="#"><span data-feather="log-out"></span></a>
             </li>
         </ul>
 
@@ -34,7 +34,7 @@
         <div class="row">
 
             <!-- SIDEBAR -->
-            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light sidebar sticky-top">
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
                 <div class="sidebar-sticky">
 
                     <ul class="nav flex-column">
@@ -61,7 +61,7 @@
             <!-- MAIN SCREEN -->
             <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
 
-                <h3>PAYMENT DETAILS</h3>
+                <h4>PAYMENT DETAILS</h4>
                 <div class="container-fluid">
                     <div class="row justify-content-center mt-5">
                         <div class="card p-3">
@@ -80,13 +80,13 @@
 
                 <div class="container-fluid">
                     <div class="row justify-content-center mt-5">
-                        <div class="card p-5">
+                        <div class="card p-5 mb-5">
                             <div class="card-text">
                                 <form>
                                     <div class="form-group">
                                         <label for="card-holder">Card holder</label>
                                         <input type="text" class="form-control" id="card-holder" aria-describedby="card-holder" placeholder="Card holder">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your credit card infomation.</small>
+                                        <small id="card-holder-info" class="form-text text-muted">We'll never share your credit card infomation.</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="credit-card">Credit card</label>
@@ -104,7 +104,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-danger">PROCEED TO PAYMENT</button>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-danger">PROCEED TO PAYMENT</button>
+                                    </div>
+                                    
                                 </form>
                             </div>
                         </div>
