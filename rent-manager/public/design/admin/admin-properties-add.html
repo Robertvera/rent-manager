@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin-Properties</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
+
+        <ul class="navbar-nav px-5">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">
+                    <span data-feather="log-out"></span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="activity"></span>
+                                Overview
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="home"></span>
+                                Properties
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Leases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Tenants
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="dollar-sign"></span>
+                                Payments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="user"></span>
+                                Owners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="credit-card"></span>
+                                Transfers
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- MAIN SCREEN -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="container-fluid edit-apartments-module">
+                    <div class="row mt-5">
+                        <div class="col-lg-5 col-sm-12 mb-5">
+                            <form class="col-12 p-0">
+                                <div class="form-group">
+                                    <label for="property">Property</label>
+                                    <input type="text" class="form-control" id="property" aria-describedby="property" placeholder="property" value="GUARDIA I">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" placeholder="Address" value="c/ Guardia 10 1º 2ª 08001 Barcelona">
+                                </div>
+                                <div class="container p-0">
+                                    <div class="row justify-content-around">
+                                        <div class="form-group col-12 col-lg-3 p-0">
+                                            <label for="rooms">Rooms</label>
+                                            <input type="number" class="form-control" id="rooms" placeholder="Rooms" value="4">
+                                        </div>
+                                        <div class="form-group col-12 col-lg-3 p-0">
+                                            <label for="rooms">Square meters</label>
+                                            <input type="number" class="form-control" id="sqm" placeholder="Square meters" value="80">
+                                        </div>
+                                        <div class="form-group col-12 col-lg-4 p-0">
+                                            <label for="credit-card">Neighbourhood</label>
+                                            <select class="custom-select" name="neighbourhood">
+                                                <option value="barceloneta">Barceloneta</option>
+                                                <option value="born">Born</option>
+                                                <option value="eixample">Eixample</option>
+                                                <option value="gothic">Gothic</option>
+                                                <option value="gracia">Gràcia</option>
+                                                <option value="poble-nou">Poble Nou</option>
+                                                <option value="raval">Raval</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="justify-content-around d-flex">
+                                    <div class="form-group col-12 col-lg-10 p-0">
+                                        <label for="credit-card">Owner</label>
+                                        <select class="custom-select" name="owner">
+                                            <option value="john-doe">John Doe</option>
+                                            <option value="brian-lancaster">Brian Lancaster</option>
+                                            <option value="donna-summer">Donna Summer</option>
+                                            <option value="michelle-obama">Michelle Obama</option>
+                                            <option value="doris-burke">Doris Burke</option>
+                                            <option value="betty-simmons">Betty Simmons</option>
+                                            <option value="bran-stark">Bran Stark</option>
+                                        </select>
+                                        <button type="button" class="btn btn-success col-2">+</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-12 p-0">
+                                <button class="btn btn-danger">SAVE</button>
+                            </div>
+                        </div>
+                        <div class="card col-lg-6 col-sm-12 p-0">                                
+                            <img class="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top">                                                                
+                                <a href="#" class="btn btn-success">UPLOAD IMAGE</a>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript  -->
+    <script src="../../vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../../vendor/popper/popper.min.js"></script>
+    <script src="../../vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+</body>
+
+</html>
