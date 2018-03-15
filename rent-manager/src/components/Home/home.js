@@ -34,7 +34,7 @@ class Home extends Component {
                                 <h2>ADMINISTRATOR</h2>
                                 <p className="text-justify text-center">Manage your properties, payments and clients from the same place. With
             <strong>Rent Manager</strong> everything is under control.</p>
-                                <NavLink className="btn btn-danger mx-auto" href="#" role="button" to="/back/admin/dashboard">Log in as admin »</NavLink>
+                                <NavLink className="btn btn-danger mx-auto" href="#" role="button" to="/back/admin/overview">Log in as admin »</NavLink>
                             </div>
                         </section>
                         <section className="col-lg-4 col-md-4 col-sm-12 mb-4">

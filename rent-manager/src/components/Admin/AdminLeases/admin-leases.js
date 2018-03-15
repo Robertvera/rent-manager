@@ -36,9 +36,10 @@ class AdminLeases extends Component {
               <option value="poble-nou">January 18</option>
               <option value="raval">January 18</option>
             </select>
-            <input type="text" className="form-control col-lg-2 col-md-5 col-sm-12" placeholder="Search by property" />
-            {/* <NavLink to="/back/admin/add-leases"><button type="button" className="btn btn-success col-lg-2 col-md-12 col-sm-12">+ Add new lease</button></NavLink> */}
-            <NavLink to="/back/admin/add-leases" type="button" className="btn btn-success col-lg-2 col-md-12 col-sm-12">+ Add new lease</NavLink>
+            <input type="text" className="form-control col-lg-2 col-md-5 col-sm-12" placeholder="Search by property" />            
+            <div className="col-lg-2 col-md-12 col-sm-12 p-0">
+              <NavLink to="leases/add"><button type="button" className="btn btn-success">+ Add new lease</button></NavLink>
+            </div>
           </div>
         </div>
       </div>

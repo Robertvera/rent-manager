@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react';
 import { NavLink } from 'react-router-dom'
 import './sidebar.css';
-import { Activity, DollarSign } from 'react-feather'
+import { Activity, DollarSign, FileText, CreditCard, Home, Users, User } from 'react-feather'
 
 class SideBar extends Component {
     render() {
@@ -11,13 +11,67 @@ class SideBar extends Component {
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
                         <li className="nav-item">
-                            <NavLink className="nav-link active" href="#" to="/back/tenant/overview">
+                            <NavLink className="nav-link" href="#" to="/back/tenant/overview">
                                 <Activity />
                                     Overview
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" href="#" to="/back/tenant/payments">
+                                <DollarSign/>
+                                    Payments
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/overview">
+                                <Activity />
+                                    Overview
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/properties">
+                                <Home/>
+                                    Properties
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/leases">
+                                <FileText/>
+                                    Leases
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/tenants">
+                                <Users/>
+                                    Tenants
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/payments">
+                                <DollarSign/>
+                                    Payments
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/owners">
+                                <User/>
+                                    Owners
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/admin/transfers">
+                                <CreditCard/>
+                                    Transfers
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/owner/overview">
+                                <Activity/>
+                                    Overview
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" href="#" to="/back/owner/payments">
                                 <DollarSign/>
                                     Payments
                             </NavLink>
