@@ -130,7 +130,8 @@ const Property = new Schema({
 
     reference: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     address: {

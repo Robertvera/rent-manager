@@ -5,6 +5,153 @@ const validate = require('./validate')
 const uuid = require('uuid/v4')
 
 module.exports = {
+
+    /////////////////////////////// TRANSFER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    /////////////////////////////// DEDUCTION METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    /////////////////////////////// OWNER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    registerOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ documentId, name, surname, password })
+
+                return Owner.findOne({ documentId })
+            })
+            .then(owner => {
+                if (owner) throw Error('owner already exists')
+
+                return Owner.create({ documentId, name, surname, email, phoneNumber, nationality, bankAccount, password })
+                    .then(() => documentId)
+            })
+    },
+
+    listOwner() {
+        return Owner.find({}, { _id: 0, __v: 0 })
+    },
+
+    updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password, newName, newSurname, newEmail, newPhoneNumber, newNationality, newBankAccount, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ newName, newSurname, newEmail, newPhoneNumber, newNationality, newBankAccount, newPassword })
+
+                return Owner.findOne({ documentId })
+            })
+            .then(owner => {
+                if (!owner) throw Error('the owner does not exists')
+
+                return Owner.updateOne({ name: newName }, { surname: newSurname, email: newEmail, phoneNumber: newPhoneNumber, nationality: newNationality, bankAccount: newBankAccount, password: newPassword })
+            })
+    },
+
+    retrieveOwner(documentId) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ documentId })
+                
+                return Owner.findOne({ documentId }, { _id: 0, __v: 0 })
+            })
+            .then(owner => {
+                if (!owner) throw Error('owner does not exist')
+
+                return owner
+            })
+    },
+
+    retrieveOwnerQuery(query) {
+        return Owner.find({ $or: [{ name: new RegExp(query, 'i') }, { surname: new RegExp(query, 'i') }, { documentId: new RegExp(query, 'i') }, { email: new RegExp(query, 'i') }, { phoneNumber: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
+    },
+
+    removeOwner(documentId) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ documentId })
+
+                return Owner.findOne({ documentId })
+            })
+            .then(owner => {
+                if (!owner) throw Error('owner does not exist')
+
+                return Owner.deleteOne({ documentId })
+                    .then(() => documentId)
+            })
+    },
+
+    /////////////////////////////// PAYMENT METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+    /////////////////////////////// PROPERTY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    registerProperty(owner, reference, address, rooms, sqm, neighbourhood, picture, status) {
+        return Promise.resolve()
+            .then(() => {
+                return Property.findOne({ reference })
+            })
+            .then(property => {
+                if (property) throw Error('the property already exists')
+
+                return Property.create({ owner, reference, address, rooms, sqm, neighbourhood, picture, status })
+                    .then(() => reference)
+            })
+    },
+
+    listProperty() {
+        return Property.find({}, { _id: 0, __v: 0 })
+    },
+
+    updateProperty(owner, reference, address, rooms, sqm, neighbourhood, picture, status, newOwner, newAddress, newRooms, newSqm, newNeighbourhood, newPicture, newStatus) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ owner, address, rooms, sqm, neighbourhood, status })
+
+                return Property.findOne({ reference })
+            })
+            .then(property => {
+                if (!property) throw Error('the property does not exists')
+
+                return Property.updateOne({ owner: newOwner }, { address: newAddress, rooms: newRooms, sqm: newSqm, neighbourhood: newNeighbourhood, picture: newPicture, status: newStatus })
+            })
+    },
+
+    retrieveProperty(reference) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ reference })
+
+                return Property.findOne({ reference }, { _id: 0, __v: 0 })
+            })
+            .then(property => {
+                if (!property) throw Error('property does not exist')
+
+                return property
+            })
+    },
+
+    retrievePropertyQuery(query) {
+        return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }, { owner: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    },
+
+    removeProperty(reference) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ reference })
+
+                return Property.findOne({ reference })
+            })
+            .then(property => {
+                if (!property) throw Error('property does not exist')
+
+                return Property.deleteOne({ reference })
+            })
+    },
+
+
+
+    /////////////////////////////// LEASE METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
     registerLease(property, tenants, password, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
@@ -34,8 +181,8 @@ module.exports = {
             .then(property => {
                 if (property.status != 'free') throw Error('the property you selected already has an active lease')
 
-                return Lease.updateOne({id}, {property: newProperty, tenants: newTenants, active: newActive, starting: newStarting, ending: newEnding, price: newPrice, deposit: newDeposit})
-            })            
+                return Lease.updateOne({ id }, { property: newProperty, tenants: newTenants, active: newActive, starting: newStarting, ending: newEnding, price: newPrice, deposit: newDeposit })
+            })
     },
 
     retrieveLease(id) {
@@ -53,8 +200,8 @@ module.exports = {
             })
     },
 
-    retrieveLeaseQuery(query) {        
-        return Lease.find({$or:[{property: new RegExp(query, 'i')},{id: new RegExp(query, 'i')},{tenants: new RegExp(query, 'i')},{price:new RegExp(query, 'i')},{deposit:new RegExp(query, 'i')}]}, { _id: 0, password: 0, __v:0 })        
+    retrieveLeaseQuery(query) {
+        return Lease.find({ $or: [{ property: new RegExp(query, 'i') }, { id: new RegExp(query, 'i') }, { tenants: new RegExp(query, 'i') }, { price: new RegExp(query, 'i') }, { deposit: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
     },
 
     removeLease(id) {
@@ -65,11 +212,13 @@ module.exports = {
                 return Lease.findOne({ id })
             })
             .then(lease => {
-                if (!lease) throw Error('lease does not exist')                
+                if (!lease) throw Error('lease does not exist')
 
                 return Lease.deleteOne({ id })
             })
     },
+
+    /////////////////////////////// TENANT METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     registerTenant(name, surname, documentId, active, email, phoneNumber, nationality) {
         return Promise.resolve()
@@ -88,7 +237,7 @@ module.exports = {
 
     listTenant() {
         return Tenant.find({}, { _id: 0, documentId: 1, name: 1, surname: 1, active: 1, email: 1, phoneNumber: 1, nationality: 1 })
-    },    
+    },
 
     retrieveTenant(documentId) {
         return Promise.resolve()
@@ -105,8 +254,8 @@ module.exports = {
             })
     },
 
-    retrieveTenantQuery(query) {        
-        return Tenant.find({$or:[{name: new RegExp(query, 'i')},{surname: new RegExp(query, 'i')},{documentId: new RegExp(query, 'i')},{email:new RegExp(query, 'i')}, {phoneNumber:new RegExp(query, 'i')}]}, { _id: 0, password: 0, __v:0 })        
+    retrieveTenantQuery(query) {
+        return Tenant.find({ $or: [{ name: new RegExp(query, 'i') }, { surname: new RegExp(query, 'i') }, { documentId: new RegExp(query, 'i') }, { email: new RegExp(query, 'i') }, { phoneNumber: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
     },
 
     removeTenant(documentId) {
