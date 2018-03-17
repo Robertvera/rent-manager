@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "feather-icons": "^4.7.0",
+    "mongoose": "^5.0.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-feather": "^1.0.8",
