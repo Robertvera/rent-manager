@@ -4,7 +4,7 @@ const logic = require('../../../logic')
 module.exports = (req, res) => {
     const { params: { query } } = req
 
-    logic.retrievePropertyQuery(query)
-        .then(property => res.json(success(property)))
+    logic.retrievePaymentQuery(query)
+        .then(payment => res.json(success(payment)))
         .catch(err => res.json(fail(err.message)))
 }

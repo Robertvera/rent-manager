@@ -79,6 +79,10 @@ const Lease = new Schema({
 })
 
 const Payment = new Schema({
+    id: {
+        type: String,
+        required: true
+    },
     concept: {
         type: String,
         required: true

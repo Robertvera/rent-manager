@@ -1,6 +1,8 @@
 const { Lease } = require('../models/index')
 const { Property } = require('../models/index')
 const { Tenant } = require('../models/index')
+const { Owner } = require('../models/index')
+const { Payment } = require('../models/index')
 const validate = require('./validate')
 const uuid = require('uuid/v4')
 
@@ -31,17 +33,17 @@ module.exports = {
         return Owner.find({}, { _id: 0, __v: 0 })
     },
 
-    updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password, newName, newSurname, newEmail, newPhoneNumber, newNationality, newBankAccount, newPassword) {
+    updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
         return Promise.resolve()
             .then(() => {
-                validate({ newName, newSurname, newEmail, newPhoneNumber, newNationality, newBankAccount, newPassword })
+                validate({ documentId, name, surname, email, phoneNumber, nationality, bankAccount, password })
 
                 return Owner.findOne({ documentId })
             })
             .then(owner => {
                 if (!owner) throw Error('the owner does not exists')
 
-                return Owner.updateOne({ name: newName }, { surname: newSurname, email: newEmail, phoneNumber: newPhoneNumber, nationality: newNationality, bankAccount: newBankAccount, password: newPassword })
+                return Owner.updateOne({ name, surname, email, phoneNumber, nationality, bankAccount, password })
             })
     },
 
@@ -80,10 +82,71 @@ module.exports = {
 
     /////////////////////////////// PAYMENT METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+    registerPayment(concept, type, lease, property, status, dueDate, paymentDate, amount) {
+        return Promise.resolve()
+            .then(() => {
+
+                const id = uuid()
+
+                return Payment.create({ id, concept, type, lease, property, status, dueDate, paymentDate, amount })
+                    .then(() => id)
+            })
+    },
+
+    listPayment() {
+        return Payment.find({}, { _id: 0, __v: 0 })
+    },
+
+    updatePayment(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ id, concept, type, lease, property, status, dueDate, paymentDate, amount })
+
+                return Payment.findOne({ id })
+            })
+            .then(payment => {
+                if (!payment) throw Error('the payment does not exist')
+
+                return Payment.updateOne({ concept, type, lease, property, status, dueDate, paymentDate, amount })
+            })
+    },
+
+    retrievePayment(id) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ id })
+
+                return Payment.findOne({ id }, { _id: 0, __v: 0 })
+            })
+            .then(payment => {
+                if (!payment) throw Error('payment does not exist')
+
+                return payment
+            })
+    },
+
+    retrievePaymentQuery(query) {
+        return Payment.find({ $or: [{ concept: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    },
+
+    removePayment(id) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ id })
+
+                return Payment.findOne({ id })
+            })
+            .then(payment => {
+                if (!payment) throw Error('payment does not exist')
+
+                return Payment.deleteOne({ id })
+            })
+    },
 
 
 
     /////////////////////////////// PROPERTY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
     registerProperty(owner, reference, address, rooms, sqm, neighbourhood, picture, status) {
         return Promise.resolve()
             .then(() => {
@@ -101,7 +164,7 @@ module.exports = {
         return Property.find({}, { _id: 0, __v: 0 })
     },
 
-    updateProperty(owner, reference, address, rooms, sqm, neighbourhood, picture, status, newOwner, newAddress, newRooms, newSqm, newNeighbourhood, newPicture, newStatus) {
+    updateProperty(reference, owner, address, rooms, sqm, neighbourhood, picture, status) {
         return Promise.resolve()
             .then(() => {
                 validate({ owner, address, rooms, sqm, neighbourhood, status })
@@ -109,9 +172,9 @@ module.exports = {
                 return Property.findOne({ reference })
             })
             .then(property => {
-                if (!property) throw Error('the property does not exists')
+                if (!property) throw Error('the property does not exist')
 
-                return Property.updateOne({ owner: newOwner }, { address: newAddress, rooms: newRooms, sqm: newSqm, neighbourhood: newNeighbourhood, picture: newPicture, status: newStatus })
+                return Property.updateOne({ owner, address, rooms, sqm, neighbourhood, status })
             })
     },
 
@@ -130,7 +193,7 @@ module.exports = {
     },
 
     retrievePropertyQuery(query) {
-        return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }, { owner: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+        return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
     },
 
     removeProperty(reference) {

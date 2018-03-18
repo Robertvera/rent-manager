@@ -2,9 +2,7 @@ const { success, fail } = require('../api-utils')
 const logic = require('../../../logic')
 
 module.exports = (req, res) => {
-    const { params: { query } } = req
-
-    logic.retrievePropertyQuery(query)
-        .then(property => res.json(success(property)))
+    logic.listPayment()
+        .then(payments => res.json(success(payments)))
         .catch(err => res.json(fail(err.message)))
 }
