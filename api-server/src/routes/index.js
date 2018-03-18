@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
-const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, updatePayment} = require('./handlers')
+const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, updatePayment, listLease, registerLease,updateLease, retrieveLease, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction } = require('./handlers')
 
 const router = Router()
 
@@ -60,10 +60,41 @@ router.get('/payments/:id', retrievePaymentQuery)
 
 router.delete('/payment/:id', removePayment)
 
+// LEASE ROUTES
 
+router.get('/leases', listLease)
 
+router.post('/lease', jsonBodyParser, registerLease)
 
+router.put('/lease/:id', jsonBodyParser, updateLease)
 
+router.get('/lease/:id', retrieveLease)
+
+router.get('/leases/:id', retrieveLeaseQuery)
+
+router.delete('/lease/:id', removeLease)
+
+// TRANSFER ROUTES
+
+router.get('/transfers', listTransfer)
+
+router.post('/transfer', jsonBodyParser, registerTransfer)
+
+router.put('/transfer/:_id', jsonBodyParser, updateTransfer)
+
+router.get('/transfer/:_id', retrieveTransfer)
+
+router.get('/transfers/:_id', retrieveTransferQuery)
+
+router.delete('/transfer/:_id', removeTransfer)
+
+// DEDUCTIONS ROUTES
+
+router.get('/deductions', listDeduction)
+
+router.post('/deduction', jsonBodyParser, registerDeduction)
+
+router.get('/deduction/:_id', retrieveDeduction)
 
 
 module.exports = router

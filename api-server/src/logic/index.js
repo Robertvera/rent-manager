@@ -3,6 +3,8 @@ const { Property } = require('../models/index')
 const { Tenant } = require('../models/index')
 const { Owner } = require('../models/index')
 const { Payment } = require('../models/index')
+const { Transfer } = require('../models/index')
+const { Deduction } = require('../models/index')
 const validate = require('./validate')
 const uuid = require('uuid/v4')
 
@@ -10,7 +12,89 @@ module.exports = {
 
     /////////////////////////////// TRANSFER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+    registerTransfer(concept, deductions, property, date, base) {
+        return Promise.resolve()
+            .then(() => {              
+                return Transfer.create({ concept, deductions, property, date, base })
+            })
+    },
+
+    listTransfer() {
+        return Transfer.find({}, { _id: 0, __v: 0 })
+    },
+
+    updateTransfer(_id, concept, deductions, property, date, base) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ concept, property, date, base })
+
+                return Transfer.findOne({ _id })
+            })
+            .then(transfer => {
+                if (!transfer) throw Error('the transfer does not exist')
+
+                return Transfer.updateOne({ _id }, { concept, deductions, property, date, base })
+            })
+    },
+
+    retrieveTransfer(_id) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ _id })
+
+                return Transfer.findOne({ _id }, { _id: 0, __v: 0 })
+            })
+            .then(transfer => {
+                if (!transfer) throw Error('transfer does not exist')
+
+                return transfer
+            })
+    },
+
+    retrieveTransferQuery(query) {
+        return Transfer.find({ $or: [{ property: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    },
+
+    removeTransfer(_id) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ _id })
+
+                return Transfer.findOne({ _id })
+            })
+            .then(transfer => {
+                if (!transfer) throw Error('transfer does not exist')
+
+                return Transfer.deleteOne({ _id })
+            })
+    },
+
     /////////////////////////////// DEDUCTION METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    registerDeduction(concept, amount) {
+        return Promise.resolve()
+            .then(() => {              
+                return Deduction.create({ concept, amount })
+            })
+    },
+
+    listDeduction() {
+        return Deduction.find({}, { _id: 0, __v: 0 })
+    },
+
+    retrieveDeduction(_id) {
+        return Promise.resolve()
+            .then(() => {
+                validate({ _id })
+
+                return Deduction.findOne({ _id }, { _id: 0, __v: 0 })
+            })
+            .then(deduction => {
+                if (!deduction) throw Error('transfer does not exist')
+
+                return deduction
+            })
+    },
 
     /////////////////////////////// OWNER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -43,7 +127,7 @@ module.exports = {
             .then(owner => {
                 if (!owner) throw Error('the owner does not exists')
 
-                return Owner.updateOne({ name, surname, email, phoneNumber, nationality, bankAccount, password })
+                return Owner.updateOne({ documentId }, { name, surname, email, phoneNumber, nationality, bankAccount, password })
             })
     },
 
@@ -107,7 +191,7 @@ module.exports = {
             .then(payment => {
                 if (!payment) throw Error('the payment does not exist')
 
-                return Payment.updateOne({ concept, type, lease, property, status, dueDate, paymentDate, amount })
+                return Payment.updateOne({ id }, { concept, type, lease, property, status, dueDate, paymentDate, amount })
             })
     },
 
@@ -174,7 +258,7 @@ module.exports = {
             .then(property => {
                 if (!property) throw Error('the property does not exist')
 
-                return Property.updateOne({ owner, address, rooms, sqm, neighbourhood, status })
+                return Property.updateOne({ reference },{ owner, address, rooms, sqm, neighbourhood, status })
             })
     },
 
@@ -215,13 +299,13 @@ module.exports = {
     /////////////////////////////// LEASE METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-    registerLease(property, tenants, password, active, starting, ending, price, deposit) {
+    registerLease(property, tenants, password, active, starting, ending, price, deposit) {        
         return Promise.resolve()
             .then(() => {
-                return Property.findOne({ property })
+                return Property.findOne({ _id: property })
             })
             .then(property => {
-                if (property.status != 'free') throw Error('the property you selected already has an active lease')
+                if (property.status == 'busy') throw Error('the property you selected already has an active lease')
 
                 const id = uuid()
 
@@ -231,20 +315,26 @@ module.exports = {
     },
 
     listLease() {
-        return Lease.find({}, { _id: 0, property: 1, id: 1, tenants: 1, active: 1, starting: 1, ending: 1, price: 1, deposit: 1 })
+        return Lease.find({}, { _id: 0, __v:0 })
     },
 
-    updateLease(id, property, tenants, active, starting, ending, price, deposit, newProperty, newTenants, newActive, newStarting, newEnding, newPrice, newDeposit) {
+    updateLease(id, property, tenants, password, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
-                validate({ id, property, tenants, active, starting, ending, price, deposit })
+                validate({ property, tenants, password, active, starting, ending, price, deposit })
 
-                return Property.findOne({ property: newProperty })
+                return Lease.findOne({ id }).populate('property')
             })
-            .then(property => {
-                if (property.status != 'free') throw Error('the property you selected already has an active lease')
+            .then(lease => {
 
-                return Lease.updateOne({ id }, { property: newProperty, tenants: newTenants, active: newActive, starting: newStarting, ending: newEnding, price: newPrice, deposit: newDeposit })
+                if(lease.property._id == property) {
+                    return Lease.updateOne({id}, { property, tenants, password, active, starting, ending, price, deposit })
+                } else if (lease.property.status == 'busy') {
+                    throw Error('the property you selected already has an active lease')
+                } 
+
+                return Lease.updateOne({id}, { property, tenants, password, active, starting, ending, price, deposit })
+                
             })
     },
 
@@ -253,8 +343,7 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                //return User.findOne({ id }, 'id name surname email username') // WARN! it returns _id too!
-                return Lease.findOne({ id }, { _id: 0, password: 0 })
+                return Lease.findOne({ id }, { _id: 0, password: 0 , __v:0 })
             })
             .then(lease => {
                 if (!lease) throw Error('lease does not exist')
@@ -264,7 +353,7 @@ module.exports = {
     },
 
     retrieveLeaseQuery(query) {
-        return Lease.find({ $or: [{ property: new RegExp(query, 'i') }, { id: new RegExp(query, 'i') }, { tenants: new RegExp(query, 'i') }, { price: new RegExp(query, 'i') }, { deposit: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
+        return Lease.find({ $or: [{ property: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
     },
 
     removeLease(id) {

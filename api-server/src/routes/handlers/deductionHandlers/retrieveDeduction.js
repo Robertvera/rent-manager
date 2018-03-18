@@ -2,9 +2,9 @@ const { success, fail } = require('../api-utils')
 const logic = require('../../../logic')
 
 module.exports = (req, res) => {
-    const { params: { id } } = req
+    const { params: { _id } } = req
 
-    logic.retrievePayment(id)
-        .then(payment => res.json(success(payment)))
+    logic.retrieveDeduction(_id)
+        .then(deduction => res.json(success(deduction)))
         .catch(err => res.json(fail(err.message)))
 }
