@@ -56,7 +56,7 @@ router.put('/payment/:id', jsonBodyParser, updatePayment)
 
 router.get('/payment/:id', retrievePayment)
 
-router.get('/payments/:id', retrievePaymentQuery)
+router.get('/payments/:query', retrievePaymentQuery)
 
 router.delete('/payment/:id', removePayment)
 
@@ -84,7 +84,7 @@ router.put('/transfer/:_id', jsonBodyParser, updateTransfer)
 
 router.get('/transfer/:_id', retrieveTransfer)
 
-router.get('/transfers/:_id', retrieveTransferQuery)
+router.get('/transfers/:query', retrieveTransferQuery)
 
 router.delete('/transfer/:_id', removeTransfer)
 
