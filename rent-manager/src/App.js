@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, HashRouter } from 'react-router-dom'
 import './App.css';
+import rentManagerApi from './api/api-client'
+
 import Home from './components/Home/home'
 import NavBar from './components/NavBar/navbar'
 import SideBar from './components/SideBar/sidebar'
@@ -24,21 +26,44 @@ import OwnerPayments from './components/Owner/OwnerPayments/owner-payments'
 
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: '',
+      leaseId: ''
+     
+    }
+  }
+
+  setUserType = (type) => {
+    this.setState({user: type})
+  }
+
+  setLeaseId = (leaseId) => {
+    this.setState( {leaseId} )
+  }
+
   render() {
     return (
       <div className="App">
         <HashRouter>
           <div>
             <Route exact path="/" render={() => (
-              <Home />
+              <Home 
+              onClickButton={this.setUserType} 
+              leaseIdHandler={this.setLeaseId}
+              />
             )} />
             <Route path="/back" render={() => (
               <div className="container-fluid">
                 <div className="row">
                   <NavBar />
-                  <SideBar />
+                  <SideBar 
+                  user = {this.state.user}/>
                   <Route exact path="/back/tenant/overview" render={() => (
-                    <TenantOverview />
+                    <TenantOverview
+                    leaseId = {this.state.leaseId}
+                    />
                   )} />
                   <Route exact path="/back/tenant/payments" render={() => (
                     <TenantPayments />

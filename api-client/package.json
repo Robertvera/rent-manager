@@ -1,0 +1,19 @@
+{
+  "name": "rent-manager-api-client",
+  "version": "1.0.0",
+  "description": "Api client for rent manager app",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "tests"
+  },
+  "keywords": [
+    "api-client",
+    "rent-manager",
+    "axios"
+  ],
+  "author": "Robert Vera",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

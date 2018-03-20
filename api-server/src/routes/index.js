@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
-const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, updatePayment, listLease, registerLease,updateLease, retrieveLease, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction } = require('./handlers')
+const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, updatePayment, listLease, registerLease,updateLease, retrieveLease, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction, checkLogin } = require('./handlers')
 
 const router = Router()
 
@@ -73,6 +73,8 @@ router.get('/lease/:id', retrieveLease)
 router.get('/leases/:id', retrieveLeaseQuery)
 
 router.delete('/lease/:id', removeLease)
+
+router.put('/lease/login/:id', jsonBodyParser, checkLogin)
 
 // TRANSFER ROUTES
 

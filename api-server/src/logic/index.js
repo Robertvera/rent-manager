@@ -7,14 +7,18 @@ const { Transfer } = require('../models/index')
 const { Deduction } = require('../models/index')
 const validate = require('./validate')
 const uuid = require('uuid/v4')
+const moment = require('moment')
 
 module.exports = {
 
     /////////////////////////////// TRANSFER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    registerTransfer(concept, deductions, property, date, base) {
+    registerTransfer(concept, _deductions, property, date, base) {
         return Promise.resolve()
-            .then(() => {              
+            .then(() => {
+                const deductions = _deductions.map(deduction => new Deduction({
+
+                }))              
                 return Transfer.create({ concept, deductions, property, date, base })
             })
     },
@@ -171,6 +175,7 @@ module.exports = {
             .then(() => {
 
                 const id = uuid()
+                
 
                 return Payment.create({ id, concept, type, lease, property, status, dueDate, paymentDate, amount })
                     .then(() => id)
@@ -311,6 +316,22 @@ module.exports = {
 
                 return Lease.create({ property, id, tenants, password, active, starting, ending, price, deposit })
                     .then(() => id)
+            })
+    },
+
+    checkLogin(_id, _password) {
+        return Promise.resolve()
+            .then(()=> {                
+                return Lease.findOne({ id: _id })                
+            })
+            .then(lease => {
+                if(!lease) throw Error('We cannot find the entered LeaseID')
+
+                if(lease.password != _password) {
+                    throw Error ('The password is wrong, please try again')
+                }
+
+                return lease
             })
     },
 

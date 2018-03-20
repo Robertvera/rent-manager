@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react';
 import { NavLink } from 'react-router-dom'
 import './tenant-overview.css';
+import rentManagerApi from '../../../api/api-client'
 import AlertMessage from './AlertMessage/alert-message.js'
 import PropertyBox from './PropertyBox/property-box'
 import TenantList from './TenantList/tenant-list'
@@ -12,6 +13,15 @@ import LeaseStarting from './LeaseStarting/lease-starting'
 import LeaseEnding from './LeaseEnding/lease-ending'
 
 class TenantOverview extends Component {
+    constructor(props) {
+        super(props)
+        
+      }
+
+    componentWillMount = () => {
+        rentManagerApi.getOneLease(this.props.leaseId).then(lease => console.log(lease))
+    }
+
     render() {
         return (
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -23,7 +33,9 @@ class TenantOverview extends Component {
                             <TenantList />
                             <RentalPrice />
                             <Deposit />
-                            <LeaseID />                            
+                            <LeaseID 
+                            leaseId = {this.props.leaseId}
+                            />                            
                         </div>
                         <LeaseStarting />
                         <LeaseEnding />

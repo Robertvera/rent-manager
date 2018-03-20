@@ -4,6 +4,7 @@ const updateLease = require('./updateLease')
 const removeLease = require('./removeLease')
 const retrieveLease = require('./retrieveLease')
 const retrieveLeaseQuery = require('./retrieveLeaseQuery')
+const checkLogin = require('./checkLogin')
 
 module.exports = {
     listLease,
@@ -11,5 +12,6 @@ module.exports = {
     updateLease,
     removeLease,
     retrieveLease,
-    retrieveLeaseQuery
+    retrieveLeaseQuery,
+    checkLogin
 }

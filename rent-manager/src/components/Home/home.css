@@ -11,3 +11,7 @@ h2 {
 .profile {
     height: 350px;
 }
+
+.warning {
+    color: red;
+}
