@@ -30,7 +30,8 @@ class App extends Component {
     super(props)
     this.state = {
       user: '',
-      leaseId: ''
+      leaseId: '',
+      paymentId: ''
      
     }
   }
@@ -41,6 +42,10 @@ class App extends Component {
 
   setLeaseId = (leaseId) => {
     this.setState( {leaseId} )
+  }
+
+  setPaymentId = (paymentId) => {
+    this.setState( {paymentId} )
   }
 
   render() {
@@ -66,10 +71,15 @@ class App extends Component {
                     />
                   )} />
                   <Route exact path="/back/tenant/payments" render={() => (
-                    <TenantPayments />
+                    <TenantPayments 
+                    leaseId = {this.state.leaseId}
+                    onClickPendingPayment={this.setPaymentId}
+                    />
                   )} />
                   <Route exact path="/back/tenant/checkout" render={() => (
-                    <TenantCheckout />
+                    <TenantCheckout 
+                    paymentId = {this.state.paymentId}
+                    />
                   )} />
                   <Route exact path="/back/admin/overview" render={() => (
                     <AdminDashboard />

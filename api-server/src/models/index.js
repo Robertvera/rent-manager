@@ -41,10 +41,6 @@ const Lease = new Schema({
         ref: 'Property',
         required: true
     },
-    id: {
-        type: String,
-        required: true
-    },    
     tenants: [
         {
             type: ObjectId,
@@ -115,7 +111,6 @@ const Payment = new Schema({
 
     paymentDate: {
         type: Date,
-        required: true
     },
 
     amount: {

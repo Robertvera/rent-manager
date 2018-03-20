@@ -8,7 +8,7 @@ class RentalPrice extends Component {
             <div className="card col-12 my-3">
                 <div className="card-body">
                     <h6 className="card-title text-center">RENTAL PRICE</h6>
-                    <p className="card-text numbers text-center">1.200 €/mo</p>
+                    <p className="card-text numbers text-center">{this.props.price} €/mo</p>
                 </div>
             </div>
         )

@@ -15,30 +15,69 @@ import LeaseEnding from './LeaseEnding/lease-ending'
 class TenantOverview extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            tenants: [],
+            propertyAddress: '',
+            price: '',
+            deposit: '',
+            starting:'',
+            ending:'',
+            picture: ''          
+           
+          }
         
       }
 
-    componentWillMount = () => {
-        rentManagerApi.getOneLease(this.props.leaseId).then(lease => console.log(lease))
+    componentDidMount = () => {
+        if (!this.state.price) {
+        const leaseId = sessionStorage.getItem('leaseId')
+            rentManagerApi.getOneLease(leaseId).then(lease => {
+                console.log(leaseId)
+                this.setState({
+                    price: lease.price,
+                    deposit: lease.deposit,
+                    starting: lease.starting,
+                    ending: lease.ending,
+                    tenants: lease.tenants,
+                    propertyAddress: lease.property.address,
+                    picture: lease.property.picture
+                })
+            })    
+        }
+        
     }
 
     render() {
+        const leaseId = sessionStorage.getItem('leaseId')
         return (
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <AlertMessage />
-                        <PropertyBox />
+                        <PropertyBox 
+                        address = {this.state.propertyAddress}
+                        picture = {this.state.picture}
+                        />
                         <div className="col-lg-5 col-sm-12 col-md-12 p-0 m-3">
-                            <TenantList />
-                            <RentalPrice />
-                            <Deposit />
+                            <TenantList 
+                            tenants = {this.state.tenants}
+                            />
+                            <RentalPrice 
+                            price = {this.state.price}
+                            />
+                            <Deposit 
+                            deposit = {this.state.deposit}
+                            />
                             <LeaseID 
-                            leaseId = {this.props.leaseId}
+                            leaseId = {leaseId}
                             />                            
                         </div>
-                        <LeaseStarting />
-                        <LeaseEnding />
+                        <LeaseStarting 
+                        starting = {this.state.starting}
+                        />
+                        <LeaseEnding 
+                        ending = {this.state.ending}
+                        />
                     </div>
                 </div>
             </main>

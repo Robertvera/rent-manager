@@ -14,7 +14,8 @@
     "react-feather": "^1.0.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "rent-manager-api-client": "file:../api-client"
+    "rent-manager-api-client": "file:../api-client",
+    "sweetalert2": "^7.17.0"
   },
   "scripts": {
     "start": "react-scripts start",

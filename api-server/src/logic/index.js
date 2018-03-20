@@ -7,7 +7,6 @@ const { Transfer } = require('../models/index')
 const { Deduction } = require('../models/index')
 const validate = require('./validate')
 const uuid = require('uuid/v4')
-const moment = require('moment')
 
 module.exports = {
 
@@ -189,14 +188,14 @@ module.exports = {
     updatePayment(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
         return Promise.resolve()
             .then(() => {
-                validate({ id, concept, type, lease, property, status, dueDate, paymentDate, amount })
+                validate({ concept, type, lease, property, status, dueDate, amount })
 
-                return Payment.findOne({ id })
+                return Payment.findOne({ _id: id })
             })
             .then(payment => {
                 if (!payment) throw Error('the payment does not exist')
 
-                return Payment.updateOne({ id }, { concept, type, lease, property, status, dueDate, paymentDate, amount })
+                return Payment.updateOne({ _id: id }, { concept, type, lease, property, status, dueDate, paymentDate, amount })
             })
     },
 
@@ -205,12 +204,22 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                return Payment.findOne({ id }, { _id: 0, __v: 0 })
+                return Payment.findOne({ _id: id }, { __v: 0 })
             })
             .then(payment => {
                 if (!payment) throw Error('payment does not exist')
 
                 return payment
+            })
+    },
+
+    retrievePaymentByLeaseId (leaseId) {
+        return Promise.resolve()
+            .then(()=> {
+                return Payment.find( {lease: leaseId} )
+            })
+            .then (payments => {
+                return payments
             })
     },
 
@@ -312,26 +321,25 @@ module.exports = {
             .then(property => {
                 if (property.status == 'busy') throw Error('the property you selected already has an active lease')
 
-                const id = uuid()
-
-                return Lease.create({ property, id, tenants, password, active, starting, ending, price, deposit })
-                    .then(() => id)
+                return Lease.create({ property, tenants, password, active, starting, ending, price, deposit })
+                    .then(lease => lease._id)
+                    
             })
     },
 
-    checkLogin(_id, _password) {
+    checkLogin(id, password) {
         return Promise.resolve()
             .then(()=> {                
-                return Lease.findOne({ id: _id })                
+                return Lease.findOne({ _id: id })                
             })
             .then(lease => {
                 if(!lease) throw Error('We cannot find the entered LeaseID')
 
-                if(lease.password != _password) {
+                if(lease.password != password) {
                     throw Error ('The password is wrong, please try again')
                 }
 
-                return lease
+                return Lease.findOne(lease, {password: 0})
             })
     },
 
@@ -344,7 +352,7 @@ module.exports = {
             .then(() => {
                 validate({ property, tenants, password, active, starting, ending, price, deposit })
 
-                return Lease.findOne({ id }).populate('property')
+                return Lease.findOne({ _id: id }).populate('property')
             })
             .then(lease => {
 
@@ -354,7 +362,7 @@ module.exports = {
                     throw Error('the property you selected already has an active lease')
                 } 
 
-                return Lease.updateOne({id}, { property, tenants, password, active, starting, ending, price, deposit })
+                return Lease.updateOne({_id: id}, { property, tenants, password, active, starting, ending, price, deposit })
                 
             })
     },
@@ -364,7 +372,7 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                return Lease.findOne({ id }, { _id: 0, password: 0 , __v:0 })
+                return Lease.findOne({ _id: id }, { password: 0 , __v:0 }).populate('tenants').populate('property')
             })
             .then(lease => {
                 if (!lease) throw Error('lease does not exist')
@@ -382,12 +390,12 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                return Lease.findOne({ id })
+                return Lease.findOne({ _id: id })
             })
             .then(lease => {
                 if (!lease) throw Error('lease does not exist')
 
-                return Lease.deleteOne({ id })
+                return Lease.deleteOne({ _id: id })
             })
     },
 

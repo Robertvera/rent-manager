@@ -94,14 +94,14 @@ conditionalMenu = (user) => {
 }
 
 render() 
-
-
 {
+    const userType = sessionStorage.getItem('userType')
     return (
         <nav className="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
             <div className="sidebar-sticky">
                 <ul className="nav flex-column">
-                    {this.conditionalMenu(this.props.user)}                                                    
+                    {/* {this.conditionalMenu(this.props.user)}                                                     */}
+                    {this.conditionalMenu(userType)}
                 </ul>
             </div>
         </nav>

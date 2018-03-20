@@ -12,18 +12,19 @@ class Home extends Component {
             tenantVisible: false,
             leaseId: '',
             leasePassword: '',
-            loggedIn: null        
+            loggedIn: null
         }
 
     }
     sendUserType = (type) => {
         this.props.onClickButton(type)
+        sessionStorage.setItem('userType', (type))
     }
 
-    openModal = () => {    
+    openModal = () => {
         this.setState(
             {
-                tenantVisible: true,                
+                tenantVisible: true,
             }
         )
     }
@@ -34,36 +35,42 @@ class Home extends Component {
         )
     }
 
-    keepLeaseId = leaseId => this.setState({leaseId})
+    keepLeaseId = leaseId => this.setState({ leaseId })
 
-    keepLeasePassword = leasePassword => this.setState({leasePassword})
+    keepLeasePassword = leasePassword => this.setState({ leasePassword })
 
     tenantLogin = (leaseId, password) => {
         return rentManagerApi.checkLogin(leaseId, password)
-            .then(data => {                
+            .then(data => {
+                console.log(data)
                 console.log(data.data.status)
-                if (data.data.status.toString() == 'OK') {
+                if (data.data.status.toString() === 'OK') {
+                    this.storeLeaseId(data)
                     this.setState({ loggedIn: true })
                     this.props.leaseIdHandler(leaseId)
                 } else {
                     this.setState({ loggedIn: false })
                 }
             })
+    }
 
+    storeLeaseId = (lease) => {
+        sessionStorage.setItem('leaseId', (lease.data.data._id))
+
+        console.log(sessionStorage)
     }
 
     loginWarning = () => {
-        return  <p className="warning">
-                    Ooops! wrong lease ID or password!
+        return <p className="warning">
+            Ooops! wrong lease ID and/or password!
                 </p>
     }
 
-
     render() {
 
-        if(this.state.loggedIn) {
-            return <Redirect to="/back/tenant/overview"/>
-        } 
+        if (this.state.loggedIn) {
+            return <Redirect to="/back/tenant/overview" />
+        }
 
         return (
             <main role="main">
@@ -88,7 +95,7 @@ class Home extends Component {
                                     role="button"
                                     onClick={(e) => { e.preventDefault; this.sendUserType('tenant'); this.openModal() }}
                                 >
-                                Log in as tenant »  
+                                    Log in as tenant »
                                 </button>
                             </div>
                         </section>
@@ -121,7 +128,7 @@ class Home extends Component {
                 </div>
                 {/* MODAL */}
 
-                <Modal visible={this.state.tenantVisible} onClickBackdrop={(e)=>{e.preventDefault; this.modalClose()}}>
+                <Modal visible={this.state.tenantVisible} onClickBackdrop={(e) => { e.preventDefault; this.modalClose() }}>
                     <div className="modal-header">
                         <h5 className="modal-title">Tenant Log in</h5>
                     </div>
@@ -129,37 +136,37 @@ class Home extends Component {
                         <p>In order to log in, please insert your lease ID and password:</p>
                         <form>
                             <div className="form-group">
-                                <input 
-                                type="username" 
-                                className="form-control" 
-                                id="inputLeaseId" 
-                                placeholder="Lease ID" 
-                                onChange={(e) => this.keepLeaseId(e.target.value)}
+                                <input
+                                    type="username"
+                                    className="form-control"
+                                    id="inputLeaseId"
+                                    placeholder="Lease ID"
+                                    onChange={(e) => this.keepLeaseId(e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
-                                <input 
-                                type="password" 
-                                className="form-control" 
-                                id="inputPassword" 
-                                placeholder="Password" 
-                                onChange={(e) => this.keepLeasePassword(e.target.value)}
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="Password"
+                                    onChange={(e) => this.keepLeasePassword(e.target.value)}
                                 />
                             </div>
-                            { this.state.loggedIn == false ? this.loginWarning(): null }                            
+                            {this.state.loggedIn == false ? this.loginWarning() : null}
+                                <button
+                                    role="button"
+                                    className="btn btn-success"
+                                    onClick={(e) => {
+                                        e.preventDefault;
+                                        this.tenantLogin(this.state.leaseId, this.state.leasePassword)
+                                    }}
+                                >
+                                    Log in
+                                </button>
                         </form>
                     </div>
-                    <div className="modal-footer">
-                        <button 
-                        role="button" 
-                        className="btn btn-success"
-                        onClick={(e)=>{e.preventDefault; 
-                            this.tenantLogin(this.state.leaseId, this.state.leasePassword)                            
-                        }} 
-                        >
-                        Log in                                               
-                        </button>
-                    </div>
+
                 </Modal>
 
                 {/* FOOTER */}

@@ -9,13 +9,20 @@ class TenantPayments extends Component {
     constructor(props) {
         super(props)
         this.state = {
-          payments: []
+          payments: [],
+          paymentId: ''
          
         }
       }
 
     componentDidMount = () => {
-        rentManagerApi.getPayments().then(payments => this.setState({payments}))
+        const leaseId = sessionStorage.getItem('leaseId')
+        rentManagerApi.getPaymentsByLeaseId(leaseId).then(payments => this.setState({payments}))
+    }
+
+    setPaymentId = (paymentId) => {
+        this.setState({paymentId})
+        this.props.onClickPendingPayment(paymentId)
     }
 
     render() {
@@ -37,17 +44,28 @@ class TenantPayments extends Component {
                                     </thead>
                                     <tbody>
                                         {this.state.payments.map(payment => {
-                                            let paymentDate = (new Date(`${payment.paymentDate}`)).toString()
-                                            let dueDate = (new Date(`${payment.dueDate}`)).toString()
-                                            return  <tr>
+                                            
+                                            let paymentDate = payment.paymentDate ? moment((new Date(`${payment.paymentDate}`)).toString()).format('DD-MMM-YYYY').toString() : '---'                                            
+                                            let dueDate = moment((new Date(`${payment.dueDate}`)).toString()).format('DD-MMM-YYYY').toString()                                            
+                                            return  <tr key = {payment._id}>
                                                         <td>{payment.concept}</td>
                                                         <td>{payment.amount} €</td>
-                                                        <td>{moment(dueDate).format('DD-MMM-YYYY').toString()}</td>                                                        
-                                                        <td>{moment(paymentDate).format('DD-MMM-YYYY').toString()}</td>
+                                                        <td>{dueDate}</td>                                                        
+                                                        <td>{paymentDate}</td>
                                                         {(payment.status) == 'pending' ? 
-                                                        <td><NavLink href="#" className="badge badge-danger" to="/back/tenant/checkout">Click to pay</NavLink></td> 
+                                                        <td>
+                                                        <NavLink 
+                                                        className="badge badge-danger" 
+                                                        to="/back/tenant/checkout"
+                                                        onClick={(e)=>{e.preventDefault;
+                                                        this.setPaymentId(payment._id)  
+                                                        }} 
+                                                        >
+                                                        Click to pay
+                                                        </NavLink>
+                                                        </td> 
                                                         : 
-                                                        <td><a href="#" className="badge badge-success">Paid</a></td>}
+                                                        <td><span className="badge badge-success">Paid</span></td>}
                                                     </tr>
                                         })}                                        
                                     </tbody>

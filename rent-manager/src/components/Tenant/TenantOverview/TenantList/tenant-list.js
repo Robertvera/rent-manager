@@ -18,18 +18,13 @@ class TenantList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mark Otto</td>
-                                <td>452456345</td>
-                            </tr>
-                            <tr>
-                                <td>Jacob Thornton</td>
-                                <td>453452345</td>
-                            </tr>
-                            <tr>
-                                <td>Larry the Bird</td>
-                                <td>8347509384</td>
-                            </tr>
+                            {this.props.tenants.map(tenant => {
+                                return  <tr key={tenant.documentId}>
+                                            <td>{tenant.name} {tenant.surname}</td>
+                                            <td>{tenant.documentId}</td>                                    
+                                        </tr>                                
+                            })}
+                            
                         </tbody>
                     </table>
                 </div>

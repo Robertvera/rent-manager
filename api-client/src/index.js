@@ -69,10 +69,13 @@ const rentManagerApi = {
         return axios.post(`${this._url()}/payment`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data.data)
     },
     updatePayment: function(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
-        return axios.put(`${this._url()}/payment/${id}`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data.data)
+        return axios.put(`${this._url()}/payment/${id}`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data)
     },
     getOnePayment: function(id) {
         return axios.get(`${this._url()}/payment/${id}`).then(data => data.data.data)
+    },
+    getPaymentsByLeaseId: function(id) {
+        return axios.get(`${this._url()}/payments-by-lease/${id}`).then(data=>data.data.data)
     },
     getPaymentSearch: function(query) {
         return axios.get(`${this._url()}/payments/${query}`).then(data => data.data.data)
