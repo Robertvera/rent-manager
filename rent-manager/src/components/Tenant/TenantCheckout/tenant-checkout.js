@@ -23,6 +23,7 @@ class TenantCheckout extends Component {
     }
 
     updateStatus = () => {
+        console.log('hola updatestatus')
         let paymentDate = new Date
         rentManagerApi.updatePayment(this.props.paymentId, this.state.paymentInfo.concept, this.state.paymentInfo.type, this.state.paymentInfo.lease, this.state.paymentInfo.property, 'paid', this.state.paymentInfo.dueDate, paymentDate, this.state.paymentInfo.amount)
             .then(payment => {
@@ -91,7 +92,7 @@ class TenantCheckout extends Component {
                                         <button 
                                         type="submit" 
                                         className="btn btn-danger"
-                                        onSubmit={(e) => {e.preventDefault;
+                                        onClick={(e) => {e.preventDefault;
                                                         this.updateStatus();
                                         }}
                                         >

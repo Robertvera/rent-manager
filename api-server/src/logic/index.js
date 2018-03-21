@@ -223,6 +223,10 @@ module.exports = {
             })
     },
 
+    retrievePaymentByStatus (status) {
+        return Payment.find({status}).populate('property')
+    },
+
     retrievePaymentQuery(query) {
         return Payment.find({ $or: [{ concept: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
     },
@@ -292,6 +296,10 @@ module.exports = {
 
     retrievePropertyQuery(query) {
         return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    },
+
+    retrievePropertyByStatus(status) {
+        return Property.find({status})
     },
 
     removeProperty(reference) {
@@ -383,6 +391,14 @@ module.exports = {
 
     retrieveLeaseQuery(query) {
         return Lease.find({ $or: [{ property: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
+    },
+
+    retrieveLeaseEnding() {
+        let timeStamp = new Date
+        let nowPlusMonth = new Date(timeStamp.setMonth(timeStamp.getMonth()+1))
+        let now = new Date
+
+        return Lease.find({ending: {'$gte': now, '$lte':nowPlusMonth}})
     },
 
     removeLease(id) {

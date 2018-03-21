@@ -22,7 +22,8 @@ class TenantOverview extends Component {
             deposit: '',
             starting:'',
             ending:'',
-            picture: ''          
+            picture: '',
+            outdatedPayments: false        
            
           }
         
@@ -40,12 +41,30 @@ class TenantOverview extends Component {
                     ending: lease.ending,
                     tenants: lease.tenants,
                     propertyAddress: lease.property.address,
-                    picture: lease.property.picture
+                    picture: lease.property.picture,                    
                 })
+            })
+            
+            rentManagerApi.getPaymentsByLeaseId(leaseId).then(payments => {
+                const today = (new Date).toISOString()
+
+                console.log(today)                
+
+                payments.forEach((payment)=> {                    
+                    let dueDate = payment.dueDate
+                    console.log(dueDate)
+                    if (dueDate < today && payment.status == 'pending') {
+                        this.setState({
+                            outdatedPayments: true
+                        })
+                    }
+                })                                                
+
             })    
         }
         
     }
+
 
     render() {
         const leaseId = sessionStorage.getItem('leaseId')
@@ -53,7 +72,7 @@ class TenantOverview extends Component {
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
-                        <AlertMessage />
+                        {this.state.outdatedPayments ? <AlertMessage /> : null}
                         <PropertyBox 
                         address = {this.state.propertyAddress}
                         picture = {this.state.picture}
