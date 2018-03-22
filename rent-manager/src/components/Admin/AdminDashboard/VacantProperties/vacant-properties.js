@@ -38,7 +38,7 @@ class VacantProperties extends Component {
                                         </thead>
                                         <tbody>
                                             {this.state.vacantProperties.map(properties => {
-                                                return  <tr>
+                                                return  <tr key={properties._id}>
                                                             <td>{properties.reference}</td>
                                                             <td>{properties.address}</td>
                                                         </tr>

@@ -5,6 +5,7 @@ const removeProperty = require('./removeProperty')
 const retrieveProperty = require('./retrieveProperty')
 const retrievePropertyQuery = require('./retrievePropertyQuery')
 const retrievePropertyByStatus = require('./retrievePropertyByStatus')
+const retrievePropertyByFilters = require('./retrievePropertyByFilters')
 
 module.exports = {
     listProperty,
@@ -13,5 +14,6 @@ module.exports = {
     removeProperty,
     retrieveProperty,
     retrievePropertyQuery,
-    retrievePropertyByStatus
+    retrievePropertyByStatus,
+    retrievePropertyByFilters
 }

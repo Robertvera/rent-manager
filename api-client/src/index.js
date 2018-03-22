@@ -50,11 +50,14 @@ const rentManagerApi = {
     getPropertiesByStatus: function(status) {
         return axios.get(`${this._url()}/properties-by-status/${status}`).then(data => data.data.data)
     },
-    createProperty: function(owner, reference, address, rooms, sqm, neighbourhood, picture, status) {
-        return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, neighbourhood, picture, status}).then(data => data.data.data)
+    getPropertiesByFilter: function(status, hood) {
+        return axios.get(`${this._url()}/properties-by-status/${status}&${hood}`).then(data => data.data.data)
     },
-    updateProperty: function(reference, owner, address, rooms, sqm, neighbourhood, picture, status) {
-        return axios.put(`${this._url()}/property/${reference}`, {owner, address, rooms, sqm, neighbourhood, picture, status}).then(data => data.data.data)
+    createProperty: function(owner, reference, address, rooms, sqm, price, neighbourhood, picture, status) {
+        return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
+    },
+    updateProperty: function(reference, owner, address, rooms, sqm, price, neighbourhood, picture, status) {
+        return axios.put(`${this._url()}/property/${reference}`, {owner, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
     },
     getOneProperty: function(reference) {
         return axios.get(`${this._url()}/property/${reference}`).then(data => data.data.data)
@@ -104,8 +107,8 @@ const rentManagerApi = {
     getLeaseSearch: function(query) {
         return axios.get(`${this._url()}/leases/${query}`).then(data => data.data.data)
     },
-    getLeasesEndingSoon: function(date) {
-        return axios.get(`${this._url()}/leases-ending/${date}`).then(data => data.data.data)
+    getLeasesEndingSoon: function() {
+        return axios.get(`${this._url()}/leases-ending`).then(data => data.data.data)
     },
     deleteLease: function (id) {
         return axios.delete(`${this._url()}/lease/${id}`).then(data => data.data.data)

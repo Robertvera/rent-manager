@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react';
 import { NavLink } from 'react-router-dom'
 import rentManagerApi from '../../../../api/api-client'
+import moment from 'moment'
 
 class LeasesEnding extends Component {
 
@@ -33,42 +34,17 @@ class LeasesEnding extends Component {
                                         <thead>
                                             <tr>
                                                 <th scope="col">PROPERTY</th>
-                                                <th scope="col">SINCE</th>
+                                                <th scope="col">ENDING DATE</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>GUARDIA 4</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>LANCASTER</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>SANT PAU</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>LLEONA</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>BOT</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>MOLES</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>ROCA 1</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
-                                            <tr>
-                                                <td>GUARDIA 3</td>
-                                                <td>24/07/2008</td>
-                                            </tr>
+                                            {this.state.leasesEnding.map(lease => {
+                                                let endingDate = moment((new Date(`${lease.ending}`)).toString()).format('DD-MMM-YYYY').toString()
+                                                return  <tr key={lease._id}>
+                                                            <td>{lease.property.reference}</td>
+                                                            <td>{endingDate}</td>
+                                                        </tr>
+                                            })}                                            
                                         </tbody>
                                     </table>
                                 </div>

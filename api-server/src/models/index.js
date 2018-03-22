@@ -148,6 +148,11 @@ const Property = new Schema({
         required: true
     },
 
+    price: {
+        type: Number,
+        require: true
+    },
+
     neighbourhood: {
         type: String,
         required: true

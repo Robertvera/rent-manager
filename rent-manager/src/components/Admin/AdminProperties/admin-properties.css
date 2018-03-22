@@ -27,3 +27,11 @@
   background-color:green;
   display:inline-block;
 }
+
+.apartments-module .yellow-dot {
+    width:10px;
+    height:10px;
+    border-radius:100%;
+    background-color:rgb(255, 208, 0);
+    display:inline-block;
+  }

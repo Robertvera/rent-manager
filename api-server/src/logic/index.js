@@ -249,7 +249,7 @@ module.exports = {
 
     /////////////////////////////// PROPERTY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     
-    registerProperty(owner, reference, address, rooms, sqm, neighbourhood, picture, status) {
+    registerProperty(owner, reference, address, rooms, sqm, price, neighbourhood, picture, status) {
         return Promise.resolve()
             .then(() => {
                 return Property.findOne({ reference })
@@ -257,7 +257,7 @@ module.exports = {
             .then(property => {
                 if (property) throw Error('the property already exists')
 
-                return Property.create({ owner, reference, address, rooms, sqm, neighbourhood, picture, status })
+                return Property.create({ owner, reference, address, rooms, sqm, price, neighbourhood, picture, status })
                     .then(() => reference)
             })
     },
@@ -266,17 +266,17 @@ module.exports = {
         return Property.find({}, { _id: 0, __v: 0 })
     },
 
-    updateProperty(reference, owner, address, rooms, sqm, neighbourhood, picture, status) {
+    updateProperty(reference, owner, address, rooms, sqm, price, neighbourhood, picture, status) {
         return Promise.resolve()
             .then(() => {
-                validate({ owner, address, rooms, sqm, neighbourhood, status })
+                validate({ owner, address, rooms, sqm, price, neighbourhood, status })
 
                 return Property.findOne({ reference })
             })
             .then(property => {
                 if (!property) throw Error('the property does not exist')
 
-                return Property.updateOne({ reference },{ owner, address, rooms, sqm, neighbourhood, status })
+                return Property.updateOne({ reference },{ owner, address, rooms, sqm, price, neighbourhood, status })
             })
     },
 
@@ -296,6 +296,19 @@ module.exports = {
 
     retrievePropertyQuery(query) {
         return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    },
+
+    retrievePropertyByFilters (status,hood) {
+        if(status === 'all' && hood === 'all') {
+            return Property.find({}, {_id:0, __v:0})
+        } else if (hood === 'all') {
+            return Property.find({status}, {_id:0, __v:0})    
+        } else if (status === 'all') {
+            return Property.find({neighbourhood: hood}, {_id:0, __v:0})
+        }
+        
+
+        return Property.find({status, neighbourhood: hood}, {_id:0, __v:0})
     },
 
     retrievePropertyByStatus(status) {
@@ -398,7 +411,7 @@ module.exports = {
         let nowPlusMonth = new Date(timeStamp.setMonth(timeStamp.getMonth()+1))
         let now = new Date
 
-        return Lease.find({ending: {'$gte': now, '$lte':nowPlusMonth}})
+        return Lease.find({ending: {'$gte': now, '$lte':nowPlusMonth}},{password: 0, __v: 0}).populate('property')
     },
 
     removeLease(id) {
