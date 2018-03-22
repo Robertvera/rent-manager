@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter, Redirect } from 'react-router-dom'
 import { Maximize2, User } from 'react-feather'
 import './properties-list.css';
 import rentManagerApi from '../../../../api/api-client'
+import swal from 'sweetalert2'
 
 class PropertiesList extends Component {
     constructor(props) {
@@ -54,6 +55,37 @@ class PropertiesList extends Component {
         }        
     }
 
+    DeleteProperty = (reference) => {
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+                rentManagerApi.deleteProperty(reference)
+                .then(()=> {
+                    swal(
+                        'Deleted!',
+                        'The property has been deleted',
+                        'success'                        
+                      )
+                })
+                .then(()=> {
+                    this.props.history.push("/back/admin/properties")
+                })
+            }
+          })
+    }
+
+    EditProperty = (reference) => {
+        this.props.onClickEdit(reference)
+        // return <Redirect to='/back/admin/properties/edit' />
+    }
+
     render() {
         return (
             <div className="card-columns">
@@ -75,8 +107,20 @@ class PropertiesList extends Component {
                                         </div>
                                     </div>
                                 <div className="d-flex justify-content-around">
-                                    <a href="#" className="btn btn-warning">Edit</a>
-                                    <a href="#" className="btn btn-danger">Delete</a>
+                                    <NavLink 
+                                    className="btn btn-warning"
+                                    onClick={(e)=> {e.preventDefault;
+                                    this.EditProperty(property.reference)}}
+                                    to = '/back/admin/properties/edit'
+                                    >
+                                    Edit
+                                    </NavLink>
+                                    <button 
+                                    className="btn btn-danger"
+                                    onClick= {(e)=>{e.preventDefault;
+                                    this.DeleteProperty(property.reference)}}>
+                                    Delete
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -92,4 +136,4 @@ class PropertiesList extends Component {
 }
 
 
-export default PropertiesList
+export default withRouter(PropertiesList)

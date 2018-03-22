@@ -285,7 +285,7 @@ module.exports = {
             .then(() => {
                 validate({ reference })
 
-                return Property.findOne({ reference }, { _id: 0, __v: 0 })
+                return Property.findOne({ reference }, { _id: 0, __v: 0 }).populate('owner')
             })
             .then(property => {
                 if (!property) throw Error('property does not exist')

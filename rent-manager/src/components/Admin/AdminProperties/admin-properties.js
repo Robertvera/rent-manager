@@ -28,6 +28,10 @@ class AdminProperties extends Component {
           this.setState({queryFilter: query})
       }
 
+      SetPropertyToEdit = (reference) => {
+          this.props.propertyToEdit(reference)
+      }
+
     render() {
         return (
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -41,6 +45,7 @@ class AdminProperties extends Component {
                         status = {this.state.statusFilter}
                         hood = {this.state.neighbourhoodFilter}
                         query = {this.state.queryFilter}
+                        onClickEdit = {this.SetPropertyToEdit}
                         />
                 </div>
             </main>
