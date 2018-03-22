@@ -34,19 +34,31 @@ class PropertiesList extends Component {
         }
     }
 
-    componentWillReceiveProps = () => {
-        console.log('holi')
-        rentManagerApi.getPropertiesByFilter(this.props.status, this.props.hood).then(properties => {
-            console.log(properties)
-            this.setState({properties})
-        })
+    componentWillReceiveProps = (nextProps) => {
+
+        console.log(nextProps)
+
+        if (nextProps != this.props) {
+            rentManagerApi.getPropertiesByFilter(nextProps.status, nextProps.hood)
+                .then(properties => {
+                    this.setState({properties})
+
+                    if(nextProps.query) {
+                        rentManagerApi.getPropertySearch(nextProps.status, nextProps.hood, nextProps.query)
+                            .then(filteredProperties => {
+                                console.log(filteredProperties)
+                                this.setState({properties: filteredProperties})
+                            })
+                    }
+            })            
+        }        
     }
 
     render() {
         return (
-            <div className="card-columns ">
+            <div className="card-columns">
                 {this.state.properties.map(property => {
-                    return <div className="card  p-0" key={property.reference}>
+                    return <div className="card p-0" key={property.reference}>
                         <img className="card-img-top p-0" src={property.picture} alt="Card image cap" />
                         <div className="info-card">
                             <div className="card-body">

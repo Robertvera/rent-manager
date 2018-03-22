@@ -294,8 +294,16 @@ module.exports = {
             })
     },
 
-    retrievePropertyQuery(query) {
-        return Property.find({ $or: [{ reference: new RegExp(query, 'i') }, { address: new RegExp(query, 'i') }] }, { _id: 0, __v: 0 })
+    retrievePropertyQuery(status, hood, query) {
+        if(status === 'all' && hood === 'all') {
+            return Property.find( {reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })    
+        } else if (hood === 'all') {
+            return Property.find(  {status, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })    
+        } else if (status === 'all') {
+            return Property.find( {neighbourhood: hood, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })
+        }
+
+        return Property.find(  {status, neighbourhood: hood, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })    
     },
 
     retrievePropertyByFilters (status,hood) {
@@ -307,7 +315,6 @@ module.exports = {
             return Property.find({neighbourhood: hood}, {_id:0, __v:0})
         }
         
-
         return Property.find({status, neighbourhood: hood}, {_id:0, __v:0})
     },
 

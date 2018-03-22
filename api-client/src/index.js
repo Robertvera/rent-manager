@@ -51,7 +51,7 @@ const rentManagerApi = {
         return axios.get(`${this._url()}/properties-by-status/${status}`).then(data => data.data.data)
     },
     getPropertiesByFilter: function(status, hood) {
-        return axios.get(`${this._url()}/properties-by-status/${status}&${hood}`).then(data => data.data.data)
+        return axios.get(`${this._url()}/properties-by-filters/${status}&${hood}`).then(data => data.data.data)
     },
     createProperty: function(owner, reference, address, rooms, sqm, price, neighbourhood, picture, status) {
         return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
@@ -62,8 +62,8 @@ const rentManagerApi = {
     getOneProperty: function(reference) {
         return axios.get(`${this._url()}/property/${reference}`).then(data => data.data.data)
     },
-    getPropertySearch: function(query) {    
-        return axios.get(`${this._url()}/properties/${query}`).then(data => data.data.data)
+    getPropertySearch: function(status, hood, query) {    
+        return axios.get(`${this._url()}/properties/${status}&${hood}&${query}`).then(data => data.data.data)
     },
     deleteProperty: function(reference) {
         return axios.delete(`${this._url()}/property/${reference}`).then(data => data.data.data)

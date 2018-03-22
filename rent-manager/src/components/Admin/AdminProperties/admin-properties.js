@@ -11,7 +11,8 @@ class AdminProperties extends Component {
         super(props)
         this.state = {
           statusFilter: 'all',
-          neighbourhoodFilter: 'all'         
+          neighbourhoodFilter: 'all',
+          queryFilter: ''
         }
       }
 
@@ -23,6 +24,10 @@ class AdminProperties extends Component {
           this.setState({neighbourhoodFilter: hood})
       }
 
+      setQueryFilter = (query) => {
+          this.setState({queryFilter: query})
+      }
+
     render() {
         return (
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -30,10 +35,12 @@ class AdminProperties extends Component {
                         <PropertiesFilters 
                         onFilterByStatus={this.setStatusFilter}
                         onFilterByNeighbourhood={this.setNeighbourhoodFilter}
+                        onFilterByQuery={this.setQueryFilter}
                         />                        
                         <PropertiesList 
                         status = {this.state.statusFilter}
                         hood = {this.state.neighbourhoodFilter}
+                        query = {this.state.queryFilter}
                         />
                 </div>
             </main>

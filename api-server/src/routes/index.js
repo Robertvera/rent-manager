@@ -42,7 +42,7 @@ router.put('/property/:reference', jsonBodyParser, updateProperty)
 
 router.get('/property/:reference', retrieveProperty)
 
-router.get('/properties/:query', retrievePropertyQuery)
+router.get('/properties/:status&:hood&:query', retrievePropertyQuery)
 
 router.get('/properties-by-status/:status', retrievePropertyByStatus)
 

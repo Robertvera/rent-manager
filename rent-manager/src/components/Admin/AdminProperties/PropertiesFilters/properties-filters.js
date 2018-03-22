@@ -18,6 +18,10 @@ class PropertiesFilters extends Component {
         this.props.onFilterByNeighbourhood(hood)
     }
 
+    keepInput = (query) => {
+        this.props.onFilterByQuery(query)
+    }
+
     render() {
         return (       
             <div className="card col-12 py-3">
@@ -47,7 +51,12 @@ class PropertiesFilters extends Component {
                             <option value="Poblenou">Poble Nou</option>
                             <option value="Raval">Raval</option>
                         </select>
-                        <input type="text" className="form-control col-lg-2 col-md-5 col-sm-12" placeholder="Search by property" />
+                        <input 
+                        type="text" 
+                        className="form-control col-lg-2 col-md-5 col-sm-12" 
+                        placeholder="Search by reference" 
+                        onChange={(e)=> {this.keepInput(e.target.value)}}
+                        />
                         <div className="col-lg-2 col-md-12 col-sm-12 p-0">
                             <NavLink to="properties/add"><button type="button" className="btn btn-success">+ Add new property</button></NavLink>
                         </div>
