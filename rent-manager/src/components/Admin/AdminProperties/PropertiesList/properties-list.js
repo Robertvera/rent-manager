@@ -37,8 +37,6 @@ class PropertiesList extends Component {
 
     componentWillReceiveProps = (nextProps) => {
 
-        console.log(nextProps)
-
         if (nextProps != this.props) {
             rentManagerApi.getPropertiesByFilter(nextProps.status, nextProps.hood)
                 .then(properties => {
@@ -111,7 +109,7 @@ class PropertiesList extends Component {
                                     className="btn btn-warning"
                                     onClick={(e)=> {e.preventDefault;
                                     this.EditProperty(property.reference)}}
-                                    to = '/back/admin/properties/edit'
+                                    to= '/back/admin/properties/edit'
                                     >
                                     Edit
                                     </NavLink>

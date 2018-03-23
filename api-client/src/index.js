@@ -57,7 +57,7 @@ const rentManagerApi = {
         return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
     },
     updateProperty: function(reference, owner, address, rooms, sqm, price, neighbourhood, picture, status) {
-        return axios.put(`${this._url()}/property/${reference}`, {owner, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
+        return axios.put(`${this._url()}/property/${reference}`, {owner, address, rooms, sqm, price, neighbourhood, picture, status})
     },
     getOneProperty: function(reference) {
         return axios.get(`${this._url()}/property/${reference}`).then(data => data.data.data)

@@ -117,7 +117,7 @@ module.exports = {
     },
 
     listOwner() {
-        return Owner.find({}, { _id: 0, __v: 0 })
+        return Owner.find({}, { __v: 0 })
     },
 
     updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react';
 import { NavLink } from 'react-router-dom'
 import './admin-add-properties.css';
+import { PlusSquare, PlusCircle, Plus } from 'react-feather'
 
 class AdminAddProperties extends Component {
     render() {
@@ -9,7 +10,89 @@ class AdminAddProperties extends Component {
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div className="container-fluid edit-apartments-module">
                     <div className="row mt-5">
-                        <div className="col-lg-5 col-sm-12 mb-5">
+                        <form className="col-lg-5 col-sm-12 mb-5">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="form-group col-12">
+                                        <label htmlFor="property">Property</label>
+                                        <input type="text" className="form-control" id="property" aria-describedby="property" placeholder="property" defaultValue="GUARDIA I" />
+                                    </div>
+                                    <div className="form-group col-12">
+                                        <label htmlFor="address">Address</label>
+                                        <input type="text" className="form-control" id="address" placeholder="Address" defaultValue="c/ Guardia 10 1º 2ª 08001 Barcelona" />
+                                    </div>
+                                    <div className="form-group col-12 col-lg-3">
+                                        <label htmlFor="rooms">Rooms</label>
+                                        <input type="number" className="form-control" id="rooms" placeholder="Rooms" defaultValue={4} />
+                                    </div>
+                                    <div className="form-group col-12 col-lg-3">
+                                        <label htmlFor="rooms">Sqm</label>
+                                        <input type="number" className="form-control" id="sqm" placeholder="Square meters" defaultValue={80} />
+                                    </div>
+                                    <div className="form-group col-12 col-lg-6">
+                                        <label htmlFor="credit-card">Neighbourhood</label>
+                                        <select className="custom-select" name="neighbourhood">
+                                            <option value="barceloneta">Barceloneta</option>
+                                            <option value="born">Born</option>
+                                            <option value="eixample">Eixample</option>
+                                            <option value="gothic">Gothic</option>
+                                            <option value="gracia">Gràcia</option>
+                                            <option value="poble-nou">Poble Nou</option>
+                                            <option value="raval">Raval</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-12">
+                                        <label htmlFor="owner">Owner</label>
+                                        <div className="container-fluid">
+                                            <div className="row">
+                                                <select className="col-10 custom-select" name="owner">
+                                                    <option value="john-doe">John Doe</option>
+                                                    <option value="brian-lancaster">Brian Lancaster</option>
+                                                    <option value="donna-summer">Donna Summer</option>
+                                                    <option value="michelle-obama">Michelle Obama</option>
+                                                    <option value="doris-burke">Doris Burke</option>
+                                                    <option value="betty-simmons">Betty Simmons</option>
+                                                    <option value="bran-stark">Bran Stark</option>
+                                                </select>
+                                                <NavLink className="col-2 mt-2" to="/back/admin/owners/add"><PlusCircle/></NavLink>        
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div className="col-12">
+                                        <button className="btn btn-danger">SAVE</button>
+                                    </div>
+
+                                </div>
+                            </div>                
+                        </form>                                
+                        <div className="card col-lg-6 col-sm-12 p-0">
+                            <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
+                            <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
+                        </div>                       
+                    </div>
+                </div>
+            </main>
+
+
+
+
+
+        )
+    }
+}
+
+
+export default AdminAddProperties
+
+
+
+
+
+{/* <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div className="container-fluid edit-apartments-module">
+                    <div className="row mt-5">
+
+<div className="col-lg-5 col-sm-12 mb-5">
                             <form className="col-12 p-0">
                                 <div className="form-group">
                                     <label htmlFor="property">Property</label>
@@ -69,17 +152,6 @@ class AdminAddProperties extends Component {
                             <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
                             <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
                         </div>
-                    </div>
+                        </div>
                 </div>
-            </main>
-
-
-
-
-
-        )
-    }
-}
-
-
-export default AdminAddProperties
+            </main> */}

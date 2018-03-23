@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import rentManagerApi from '../../../../api/api-client'
+import swal from 'sweetalert2'
+import { PlusCircle } from 'react-feather';
 
 class AdminEditProperties extends Component {
 
@@ -10,6 +12,8 @@ class AdminEditProperties extends Component {
         this.state = {
             property: '',
             owners: ''
+            
+
         }
     }
 
@@ -25,6 +29,59 @@ class AdminEditProperties extends Component {
             })
     }
 
+    handleChange = (e) => {
+        const {name, value} = e.target;
+        let property = {...this.state.property};
+        property[name] = value;
+        this.setState({property});
+    }
+
+    saveChanges = (e) => {
+        e.preventDefault()
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, update!'
+          }).then((result) => {                
+            let { reference, owner, address, rooms, sqm, price, neighbourhood, picture, status } = this.state.property
+            let roomsInt = parseInt(rooms)
+            let sqmInt = parseInt(sqm)
+            let priceInt = parseInt(price)
+            let ownerFix = owner._id || owner
+            if (result.value) {
+                rentManagerApi.updateProperty(reference, ownerFix, address, roomsInt, sqmInt, priceInt, neighbourhood, picture, status)
+                .then((result)=> {
+                    console.log(result)
+                    if (result.data.status === 'OK') {
+                        swal({
+                            title: 'Property updated!',
+                            text: 'You are being redirected',
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 2500,
+                            onOpen: () => {
+                                swal.showLoading()
+                              }                         
+                         })
+                         .then(()=> {
+                            this.props.history.push("/back/admin/properties")
+                         })
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                          })
+                    }
+                })
+            }
+          })
+    }
+
     render() {
 
         return (
@@ -33,58 +90,103 @@ class AdminEditProperties extends Component {
             { this.state.property ?
                 <div className="container-fluid edit-apartments-module">
                     <div className="row mt-5">
-                        <div className="col-lg-5 col-sm-12 mb-5">
-                            <form className="col-12 p-0">
-                                <div className="form-group">
-                                    <label htmlFor="property">Property</label>
-                                    <input type="text" className="form-control" id="property" placeholder="Property" defaultValue = {this.state.property.reference} required />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="address">Address</label>
-                                    <input type="text" className="form-control" id="address" placeholder="Address" defaultValue={this.state.property.address} required />
-                                </div>
-                                <div className="container p-0">
-                                    <div className="row justify-content-around">
-                                        <div className="form-group col-12 col-lg-3 p-0">
-                                            <label htmlFor="rooms">Rooms</label>
-                                            <input type="number" className="form-control" id="rooms" placeholder="Rooms" defaultValue={this.state.property.rooms} />
-                                        </div>
-                                        <div className="form-group col-12 col-lg-3 p-0">
-                                            <label htmlFor="rooms">Square meters</label>
-                                            <input type="number" className="form-control" id="sqm" placeholder="Square meters" defaultValue={this.state.property.sqm} />
-                                        </div>
-                                        <div className="form-group col-12 col-lg-4 p-0">
-                                            <label htmlFor="credit-card">Neighbourhood</label>
-                                            <select className="custom-select" name="neighbourhood" defaultValue={this.state.property.neighbourhood}>
-                                                <option value="barceloneta">Barceloneta</option>
-                                                <option value="born">Born</option>
-                                                <option value="eixample">Eixample</option>
-                                                <option value="gothic">Gothic</option>
-                                                <option value="gracia">Gràcia</option>
-                                                <option value="poble-nou">Poble Nou</option>
-                                                <option value="raval">Raval</option>
-                                            </select>
-                                        </div>
+                        <form className="col-lg-5 col-sm-12 mb-5">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="form-group col-12">
+                                        <label htmlFor="property">Property</label>
+                                        <input
+                                        type="text" 
+                                        className="form-control"
+                                        id="property"
+                                        placeholder="Property"
+                                        name="reference"
+                                        defaultValue = {this.state.property.reference} 
+                                        onChange = {this.handleChange}
+                                        required />
                                     </div>
-                                </div>
-                                <div className="justify-content-around d-flex">
-                                    <div className="form-group col-12 col-lg-10 p-0">
-                                        <label htmlFor="credit-card">Owner</label>
-                                        <select className="custom-select" name="owner" defaultValue={this.state.property.owner.documentId}>
-                                            {this.state.owners.map(owner => {
-                                                return <option value={owner.documentId}>{owner.name} {owner.surname}</option>
-                                            })}                                                                                        
+                                    <div className="form-group col-12">
+                                        <label htmlFor="address">Address</label>
+                                        <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        id="address" 
+                                        placeholder="Address"
+                                        name="address"
+                                        defaultValue={this.state.property.address} 
+                                        onChange = {this.handleChange}
+                                        required />
+                                    </div>                                
+                                    <div className="form-group col-12 col-lg-3">
+                                        <label htmlFor="rooms">Rooms</label>
+                                        <input 
+                                        type="number" 
+                                        className="form-control" 
+                                        id="rooms" 
+                                        name="rooms"
+                                        placeholder="Rooms" 
+                                        defaultValue={this.state.property.rooms} 
+                                        onChange = {this.handleChange}
+                                        required/>
+                                    </div>
+                                    <div className="form-group col-12 col-lg-3">
+                                        <label htmlFor="rooms">Sqm</label>
+                                        <input 
+                                        type="number" 
+                                        className="form-control" 
+                                        id="sqm" 
+                                        name="sqm"
+                                        placeholder="Square meters" 
+                                        defaultValue={this.state.property.sqm} 
+                                        onChange = {this.handleChange}
+                                        required/>
+                                    </div>
+                                    <div className="form-group col-12 col-lg-6">
+                                        <label htmlFor="credit-card">Neighbourhood</label>
+                                        <select 
+                                        className="custom-select" 
+                                        name="neighbourhood" 
+                                        defaultValue={this.state.property.neighbourhood}
+                                        onChange = {this.handleChange}
+                                        >
+                                            <option value="barceloneta">Barceloneta</option>
+                                            <option value="born">Born</option>
+                                            <option value="eixample">Eixample</option>
+                                            <option value="gothic">Gothic</option>
+                                            <option value="gracia">Gràcia</option>
+                                            <option value="poble-nou">Poble Nou</option>
+                                            <option value="raval">Raval</option>
                                         </select>
-                                        <div className="col-1 p-0">
-                                            <button type="button" className="btn btn-success">+</button>
+                                    </div>
+                                    <div className="form-group col-12">
+                                        <label htmlFor="owner">Owner</label>
+                                        <div className="container-fluid">
+                                            <div className="row">
+                                                <select 
+                                                className="col-10 custom-select" 
+                                                name="owner" 
+                                                defaultValue={this.state.property.owner._id}                                        
+                                                onChange = {this.handleChange}
+                                                >
+                                                    {this.state.owners.map(owner => {
+                                                    return <option key={owner._id} value={owner._id}>{owner.name} {owner.surname}</option>
+                                                    })}                                                                                        
+                                                </select>
+                                                <NavLink className="col-2 mt-2" to="/back/admin/owners/add"><PlusCircle/></NavLink>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="col-12">
+                                        <button 
+                                        className="btn btn-danger"
+                                        onClick = {(e) => {e.preventDefault;
+                                                    this.saveChanges(e)}}
+                                        >SAVE
+                                        </button>
+                                    </div>
                                 </div>
-                            </form>
-                            <div className="col-12 p-0">
-                                <button className="btn btn-danger">SAVE</button>
                             </div>
-                        </div>
+                        </form>
                         <div className="card col-lg-6 col-sm-12 p-0">
                             <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
                             <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
@@ -103,4 +205,4 @@ class AdminEditProperties extends Component {
 }
 
 
-export default AdminEditProperties
+export default withRouter(AdminEditProperties)

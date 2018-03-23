@@ -34,12 +34,20 @@ class TenantCheckout extends Component {
                                     text: 'You are being redirected',
                                     type: 'success',
                                     showConfirmButton: false,
-                                    timer: 2500                            
+                                    timer: 2500,
+                                    onOpen: () => {
+                                        swal.showLoading()
+                                      }                
                     })
                     .then(() => {
                         this.props.history.push("/back/tenant/payments")
-                    })                                            
-                    
+                    })                                                                
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      })
                 }
             })
     }
