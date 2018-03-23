@@ -48,7 +48,7 @@ class PropertiesFilters extends Component {
                             <option value="Eixample">Eixample</option>
                             <option value="Gothic">Gothic</option>
                             <option value="Gracia">Gràcia</option>
-                            <option value="Poblenou">Poble Nou</option>
+                            <option value="Poble Nou">Poble Nou</option>
                             <option value="Raval">Raval</option>
                         </select>
                         <input 

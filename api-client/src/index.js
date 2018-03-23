@@ -54,7 +54,7 @@ const rentManagerApi = {
         return axios.get(`${this._url()}/properties-by-filters/${status}&${hood}`).then(data => data.data.data)
     },
     createProperty: function(owner, reference, address, rooms, sqm, price, neighbourhood, picture, status) {
-        return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, price, neighbourhood, picture, status}).then(data => data.data.data)
+        return axios.post(`${this._url()}/property`, {owner, reference, address, rooms, sqm, price, neighbourhood, picture, status})
     },
     updateProperty: function(reference, owner, address, rooms, sqm, price, neighbourhood, picture, status) {
         return axios.put(`${this._url()}/property/${reference}`, {owner, address, rooms, sqm, price, neighbourhood, picture, status})

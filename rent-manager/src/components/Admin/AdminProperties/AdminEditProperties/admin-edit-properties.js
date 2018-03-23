@@ -87,7 +87,7 @@ class AdminEditProperties extends Component {
         return (
             
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
-            { this.state.property ?
+            { this.state.property && this.state.owners ?
                 <div className="container-fluid edit-apartments-module">
                     <div className="row mt-5">
                         <form className="col-lg-5 col-sm-12 mb-5">
@@ -142,20 +142,20 @@ class AdminEditProperties extends Component {
                                         required/>
                                     </div>
                                     <div className="form-group col-12 col-lg-6">
-                                        <label htmlFor="credit-card">Neighbourhood</label>
+                                        <label htmlFor="neighbourhood">Neighbourhood</label>
                                         <select 
                                         className="custom-select" 
                                         name="neighbourhood" 
                                         defaultValue={this.state.property.neighbourhood}
                                         onChange = {this.handleChange}
                                         >
-                                            <option value="barceloneta">Barceloneta</option>
-                                            <option value="born">Born</option>
-                                            <option value="eixample">Eixample</option>
-                                            <option value="gothic">Gothic</option>
-                                            <option value="gracia">Gràcia</option>
-                                            <option value="poble-nou">Poble Nou</option>
-                                            <option value="raval">Raval</option>
+                                            <option value="Barceloneta">Barceloneta</option>
+                                            <option value="Born">Born</option>
+                                            <option value="Eixample">Eixample</option>
+                                            <option value="Gothic">Gothic</option>
+                                            <option value="Gracia">Gràcia</option>
+                                            <option value="Poble Nou">Poble Nou</option>
+                                            <option value="Raval">Raval</option>
                                         </select>
                                     </div>
                                     <div className="form-group col-12">

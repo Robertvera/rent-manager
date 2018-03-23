@@ -1,65 +1,178 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import './admin-add-properties.css';
-import { PlusSquare, PlusCircle, Plus } from 'react-feather'
+import { PlusCircle } from 'react-feather'
+import rentManagerApi from '../../../../api/api-client'
+import swal from 'sweetalert2'
 
 class AdminAddProperties extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            property: '',
+            owners: ''
+            
+
+        }
+    }
+
+    componentDidMount = () => {
+
+        rentManagerApi.getOwners()
+            .then(owners => {
+                this.setState({owners})
+            })
+    }
+
+    handleChange = (e) => {
+        const {name, value} = e.target;
+        let property = {...this.state.property};
+        property[name] = value;
+        this.setState({property});
+    }
+
+    createProperty = (e) => {
+        e.preventDefault() 
+        let { reference, owner, address, rooms, sqm, price, neighbourhood } = this.state.property       
+        let picture = 'http://www.freshpalace.com/wp-content/uploads/2013/03/Beach-Apartment-Mumbai-India-Living-Space-Glass-Walls.jpg'
+        let status = 'free'
+        let roomsInt = parseInt(rooms)
+        let sqmInt = parseInt(sqm)
+        let priceInt = parseInt(price)
+
+        rentManagerApi.createProperty(owner, reference, address, roomsInt, sqmInt, priceInt, neighbourhood, picture, status)
+            .then(result=> {
+                if (result.data.status === 'OK') {
+                    swal({
+                        title: 'Property created!',
+                        text: 'You are being redirected',
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        onOpen: () => {
+                            swal.showLoading()
+                          }                         
+                     })
+                     .then(()=> {
+                        this.props.history.push("/back/admin/properties")
+                     })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      })
+                }
+            })
+    }
+
     render() {
         return (
             <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                { this.state.owners ?
                 <div className="container-fluid edit-apartments-module">
                     <div className="row mt-5">
                         <form className="col-lg-5 col-sm-12 mb-5">
                             <div className="container-fluid">
                                 <div className="row">
-                                    <div className="form-group col-12">
+                                <div className="form-group col-12 col-lg-8">
                                         <label htmlFor="property">Property</label>
-                                        <input type="text" className="form-control" id="property" aria-describedby="property" placeholder="property" defaultValue="GUARDIA I" />
+                                        <input
+                                        type="text" 
+                                        className="form-control"
+                                        id="property"
+                                        placeholder="Property"
+                                        name="reference"
+                                        onChange = {this.handleChange}
+                                        required />
+                                    </div>
+                                    <div className="form-group col-12 col-lg-4">
+                                        <label htmlFor="price">Price</label>
+                                        <input
+                                        type="text" 
+                                        className="form-control"
+                                        id="price"
+                                        placeholder="Price"
+                                        name="price"
+                                        onChange = {this.handleChange}
+                                        required />
                                     </div>
                                     <div className="form-group col-12">
                                         <label htmlFor="address">Address</label>
-                                        <input type="text" className="form-control" id="address" placeholder="Address" defaultValue="c/ Guardia 10 1º 2ª 08001 Barcelona" />
-                                    </div>
+                                        <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        id="address" 
+                                        placeholder="Address"
+                                        name="address"                                        
+                                        onChange = {this.handleChange}
+                                        required />
+                                    </div>  
                                     <div className="form-group col-12 col-lg-3">
                                         <label htmlFor="rooms">Rooms</label>
-                                        <input type="number" className="form-control" id="rooms" placeholder="Rooms" defaultValue={4} />
+                                        <input 
+                                        type="number" 
+                                        className="form-control" 
+                                        id="rooms" 
+                                        name="rooms"
+                                        placeholder="Rooms"                                         
+                                        onChange = {this.handleChange}
+                                        required/>
                                     </div>
                                     <div className="form-group col-12 col-lg-3">
                                         <label htmlFor="rooms">Sqm</label>
-                                        <input type="number" className="form-control" id="sqm" placeholder="Square meters" defaultValue={80} />
+                                        <input 
+                                        type="number" 
+                                        className="form-control" 
+                                        id="sqm" 
+                                        name="sqm"
+                                        placeholder="Square meters"                                         
+                                        onChange = {this.handleChange}
+                                        required/>
                                     </div>
                                     <div className="form-group col-12 col-lg-6">
-                                        <label htmlFor="credit-card">Neighbourhood</label>
-                                        <select className="custom-select" name="neighbourhood">
-                                            <option value="barceloneta">Barceloneta</option>
-                                            <option value="born">Born</option>
-                                            <option value="eixample">Eixample</option>
-                                            <option value="gothic">Gothic</option>
-                                            <option value="gracia">Gràcia</option>
-                                            <option value="poble-nou">Poble Nou</option>
-                                            <option value="raval">Raval</option>
+                                        <label htmlFor="neighbourhood">Neighbourhood</label>
+                                        <select 
+                                        className="custom-select" 
+                                        name="neighbourhood"
+                                        onChange = {this.handleChange}>
+                                            <option value=""> </option>
+                                            <option value="Barceloneta">Barceloneta</option>
+                                            <option value="Born">Born</option>
+                                            <option value="Eixample">Eixample</option>
+                                            <option value="Gothic">Gothic</option>
+                                            <option value="Gracia">Gràcia</option>
+                                            <option value="Poble Nou">Poble Nou</option>
+                                            <option value="Raval">Raval</option>
                                         </select>
                                     </div>
                                     <div className="form-group col-12">
                                         <label htmlFor="owner">Owner</label>
                                         <div className="container-fluid">
                                             <div className="row">
-                                                <select className="col-10 custom-select" name="owner">
-                                                    <option value="john-doe">John Doe</option>
-                                                    <option value="brian-lancaster">Brian Lancaster</option>
-                                                    <option value="donna-summer">Donna Summer</option>
-                                                    <option value="michelle-obama">Michelle Obama</option>
-                                                    <option value="doris-burke">Doris Burke</option>
-                                                    <option value="betty-simmons">Betty Simmons</option>
-                                                    <option value="bran-stark">Bran Stark</option>
+                                                <select 
+                                                className="col-10 custom-select" 
+                                                name="owner"                                                 
+                                                onChange = {this.handleChange}
+                                                >
+                                                    <option value=''> </option>
+                                                    {this.state.owners.map(owner => {
+                                                    return <option key={owner._id} value={owner._id}>{owner.name} {owner.surname}</option>
+                                                    })}                                                                                        
                                                 </select>
-                                                <NavLink className="col-2 mt-2" to="/back/admin/owners/add"><PlusCircle/></NavLink>        
+                                                <NavLink className="col-2 mt-2" to="/back/admin/owners/add"><PlusCircle/></NavLink>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                     <div className="col-12">
-                                        <button className="btn btn-danger">SAVE</button>
+                                        <button 
+                                        className="btn btn-danger"
+                                        onClick = {(e) => {e.preventDefault;
+                                                    this.createProperty(e)}}
+                                        >CREATE
+                                        </button>
                                     </div>
 
                                 </div>
@@ -71,6 +184,7 @@ class AdminAddProperties extends Component {
                         </div>                       
                     </div>
                 </div>
+                :undefined}
             </main>
 
 
@@ -82,76 +196,4 @@ class AdminAddProperties extends Component {
 }
 
 
-export default AdminAddProperties
-
-
-
-
-
-{/* <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
-                <div className="container-fluid edit-apartments-module">
-                    <div className="row mt-5">
-
-<div className="col-lg-5 col-sm-12 mb-5">
-                            <form className="col-12 p-0">
-                                <div className="form-group">
-                                    <label htmlFor="property">Property</label>
-                                    <input type="text" className="form-control" id="property" aria-describedby="property" placeholder="property" defaultValue="GUARDIA I" />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="address">Address</label>
-                                    <input type="text" className="form-control" id="address" placeholder="Address" defaultValue="c/ Guardia 10 1º 2ª 08001 Barcelona" />
-                                </div>
-                                <div className="container p-0">
-                                    <div className="row justify-content-around">
-                                        <div className="form-group col-12 col-lg-3 p-0">
-                                            <label htmlFor="rooms">Rooms</label>
-                                            <input type="number" className="form-control" id="rooms" placeholder="Rooms" defaultValue={4} />
-                                        </div>
-                                        <div className="form-group col-12 col-lg-3 p-0">
-                                            <label htmlFor="rooms">Square meters</label>
-                                            <input type="number" className="form-control" id="sqm" placeholder="Square meters" defaultValue={80} />
-                                        </div>
-                                        <div className="form-group col-12 col-lg-4 p-0">
-                                            <label htmlFor="credit-card">Neighbourhood</label>
-                                            <select className="custom-select" name="neighbourhood">
-                                                <option value="barceloneta">Barceloneta</option>
-                                                <option value="born">Born</option>
-                                                <option value="eixample">Eixample</option>
-                                                <option value="gothic">Gothic</option>
-                                                <option value="gracia">Gràcia</option>
-                                                <option value="poble-nou">Poble Nou</option>
-                                                <option value="raval">Raval</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="justify-content-around d-flex">
-                                    <div className="form-group col-12 col-lg-10 p-0">
-                                        <label htmlFor="credit-card">Owner</label>
-                                        <select className="custom-select" name="owner">
-                                            <option value="john-doe">John Doe</option>
-                                            <option value="brian-lancaster">Brian Lancaster</option>
-                                            <option value="donna-summer">Donna Summer</option>
-                                            <option value="michelle-obama">Michelle Obama</option>
-                                            <option value="doris-burke">Doris Burke</option>
-                                            <option value="betty-simmons">Betty Simmons</option>
-                                            <option value="bran-stark">Bran Stark</option>
-                                        </select>
-                                        <div className="col-1 p-0">
-                                            <button type="button" className="btn btn-success">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div className="col-12 p-0">
-                                <button className="btn btn-danger">SAVE</button>
-                            </div>
-                        </div>
-                        <div className="card col-lg-6 col-sm-12 p-0">
-                            <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
-                            <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
-                        </div>
-                        </div>
-                </div>
-            </main> */}
+export default withRouter(AdminAddProperties)

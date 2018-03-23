@@ -372,7 +372,7 @@ module.exports = {
     },
 
     listLease() {
-        return Lease.find({}, { _id: 0, __v:0 })
+        return Lease.find({}, { password:0, __v:0 }).populate('property')
     },
 
     updateLease(id, property, tenants, password, active, starting, ending, price, deposit) {

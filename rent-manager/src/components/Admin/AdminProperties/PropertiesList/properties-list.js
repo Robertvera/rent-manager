@@ -81,7 +81,6 @@ class PropertiesList extends Component {
 
     EditProperty = (reference) => {
         this.props.onClickEdit(reference)
-        // return <Redirect to='/back/admin/properties/edit' />
     }
 
     render() {
