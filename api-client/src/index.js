@@ -15,7 +15,7 @@ const rentManagerApi = {
         return axios.get(`${this._url()}/tenants`).then(data => data.data.data)
     },
     createTenant: function(name, surname, documentId, active, email, phoneNumber, nationality) {
-        return axios.post(`${this._url()}/tenant`, {name, surname, documentId, active, email, phoneNumber, nationality}).then(data => data.data.data)
+        return axios.post(`${this._url()}/tenant`, {name, surname, documentId, active, email, phoneNumber, nationality})
     },
     getOneTenant: function (id) {
         return axios.get(`${this._url()}/tenant/${id}`).then(data => data.data.data)
@@ -98,8 +98,8 @@ const rentManagerApi = {
     createLease: function(property, tenants, password, active, starting, ending, price, deposit) {
         return axios.post(`${this._url()}/lease`, {property, tenants, password, active, starting, ending, price, deposit}).then(data => data.data.data)
     },
-    updateLease: function(id, property, tenants, password, active, starting, ending, price, deposit) {
-        return axios.put(`${this._url()}/lease/${id}`, {property, tenants, password, active, starting, ending, price, deposit}).then(data => data.data.data)
+    updateLease: function(id, property, tenants, active, starting, ending, price, deposit) {
+        return axios.put(`${this._url()}/lease/${id}`, {property, tenants, active, starting, ending, price, deposit}).then(data => data.data.data)
     },
     getOneLease: function(id) {
         return axios.get(`${this._url()}/lease/${id}`).then(data => data.data.data)
@@ -111,7 +111,7 @@ const rentManagerApi = {
         return axios.get(`${this._url()}/leases-ending`).then(data => data.data.data)
     },
     deleteLease: function (id) {
-        return axios.delete(`${this._url()}/lease/${id}`).then(data => data.data.data)
+        return axios.delete(`${this._url()}/lease/${id}`, {property}).then(data => data.data.data)
     },
     checkLogin: function (id, password) {
         return axios.put(`${this._url()}/lease/login/${id}`, {password})

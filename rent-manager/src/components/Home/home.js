@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react';
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink, Redirect, withRouter } from 'react-router-dom'
 import rentManagerApi from '../../api/api-client'
 import Modal from 'react-bootstrap4-modal'
 import './home.css';
@@ -42,12 +42,11 @@ class Home extends Component {
     tenantLogin = (leaseId, password) => {
         return rentManagerApi.checkLogin(leaseId, password)
             .then(data => {
-                console.log(data)
-                console.log(data.data.status)
                 if (data.data.status.toString() === 'OK') {
                     this.storeLeaseId(data)
                     this.setState({ loggedIn: true })
                     this.props.leaseIdHandler(leaseId)
+                    this.props.history.push("/back/tenant/overview")
                 } else {
                     this.setState({ loggedIn: false })
                 }
@@ -67,10 +66,6 @@ class Home extends Component {
     }
 
     render() {
-
-        if (this.state.loggedIn) {
-            return <Redirect to="/back/tenant/overview" />
-        }
 
         return (
             <main role="main">
@@ -186,4 +181,4 @@ class Home extends Component {
 }
 
 
-export default Home
+export default withRouter(Home)

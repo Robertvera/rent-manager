@@ -8,6 +8,7 @@ const { Deduction } = require('../models/index')
 const validate = require('./validate')
 const uuid = require('uuid/v4')
 
+
 module.exports = {
 
     /////////////////////////////// TRANSFER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -17,7 +18,7 @@ module.exports = {
             .then(() => {
                 const deductions = _deductions.map(deduction => new Deduction({
 
-                }))              
+                }))
                 return Transfer.create({ concept, deductions, property, date, base })
             })
     },
@@ -76,7 +77,7 @@ module.exports = {
 
     registerDeduction(concept, amount) {
         return Promise.resolve()
-            .then(() => {              
+            .then(() => {
                 return Deduction.create({ concept, amount })
             })
     },
@@ -138,7 +139,7 @@ module.exports = {
         return Promise.resolve()
             .then(() => {
                 validate({ documentId })
-                
+
                 return Owner.findOne({ documentId }, { _id: 0, __v: 0 })
             })
             .then(owner => {
@@ -174,7 +175,7 @@ module.exports = {
             .then(() => {
 
                 const id = uuid()
-                
+
 
                 return Payment.create({ id, concept, type, lease, property, status, dueDate, paymentDate, amount })
                     .then(() => id)
@@ -213,18 +214,18 @@ module.exports = {
             })
     },
 
-    retrievePaymentByLeaseId (leaseId) {
+    retrievePaymentByLeaseId(leaseId) {
         return Promise.resolve()
-            .then(()=> {
-                return Payment.find( {lease: leaseId} )
+            .then(() => {
+                return Payment.find({ lease: leaseId })
             })
-            .then (payments => {
+            .then(payments => {
                 return payments
             })
     },
 
-    retrievePaymentByStatus (status) {
-        return Payment.find({status}).populate('property')
+    retrievePaymentByStatus(status) {
+        return Payment.find({ status }).populate('property')
     },
 
     retrievePaymentQuery(query) {
@@ -248,7 +249,7 @@ module.exports = {
 
 
     /////////////////////////////// PROPERTY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
+
     registerProperty(owner, reference, address, rooms, sqm, price, neighbourhood, picture, status) {
         return Promise.resolve()
             .then(() => {
@@ -263,7 +264,7 @@ module.exports = {
     },
 
     listProperty() {
-        return Property.find({}, { _id: 0, __v: 0 })
+        return Property.find({}, { __v: 0 })
     },
 
     updateProperty(reference, owner, address, rooms, sqm, price, neighbourhood, picture, status) {
@@ -276,7 +277,7 @@ module.exports = {
             .then(property => {
                 if (!property) throw Error('the property does not exist')
 
-                return Property.updateOne({ reference },{ owner, address, rooms, sqm, price, neighbourhood, status })
+                return Property.updateOne({ reference }, { owner, address, rooms, sqm, price, neighbourhood, status })
             })
     },
 
@@ -285,7 +286,7 @@ module.exports = {
             .then(() => {
                 validate({ reference })
 
-                return Property.findOne({ reference }, { _id: 0, __v: 0 }).populate('owner')
+                return Property.findOne({ reference }, {  __v: 0 }).populate('owner')
             })
             .then(property => {
                 if (!property) throw Error('property does not exist')
@@ -295,31 +296,31 @@ module.exports = {
     },
 
     retrievePropertyQuery(status, hood, query) {
-        if(status === 'all' && hood === 'all') {
-            return Property.find( {reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })    
+        if (status === 'all' && hood === 'all') {
+            return Property.find({ reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })
         } else if (hood === 'all') {
-            return Property.find(  {status, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })    
+            return Property.find({ status, reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })
         } else if (status === 'all') {
-            return Property.find( {neighbourhood: hood, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })
+            return Property.find({ neighbourhood: hood, reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })
         }
 
-        return Property.find(  {status, neighbourhood: hood, reference: new RegExp(query, 'i')  }, { _id: 0, __v: 0 })    
+        return Property.find({ status, neighbourhood: hood, reference: new RegExp(query, 'i') }, { _id: 0, __v: 0 })
     },
 
-    retrievePropertyByFilters (status,hood) {
-        if(status === 'all' && hood === 'all') {
-            return Property.find({}, {_id:0, __v:0})
+    retrievePropertyByFilters(status, hood) {
+        if (status === 'all' && hood === 'all') {
+            return Property.find({}, { _id: 0, __v: 0 })
         } else if (hood === 'all') {
-            return Property.find({status}, {_id:0, __v:0})    
+            return Property.find({ status }, { _id: 0, __v: 0 })
         } else if (status === 'all') {
-            return Property.find({neighbourhood: hood}, {_id:0, __v:0})
+            return Property.find({ neighbourhood: hood }, { _id: 0, __v: 0 })
         }
-        
-        return Property.find({status, neighbourhood: hood}, {_id:0, __v:0})
+
+        return Property.find({ status, neighbourhood: hood }, { _id: 0, __v: 0 })
     },
 
     retrievePropertyByStatus(status) {
-        return Property.find({status})
+        return Property.find({ status })
     },
 
     removeProperty(reference) {
@@ -341,57 +342,50 @@ module.exports = {
     /////////////////////////////// LEASE METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-    registerLease(property, tenants, password, active, starting, ending, price, deposit) {        
+    registerLease(property, tenants, password, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
                 return Property.findOne({ _id: property })
             })
-            .then(property => {
-                if (property.status == 'busy') throw Error('the property you selected already has an active lease')
+            .then(_property => {
+                if (_property.status == 'busy') throw Error('the property you selected already has an active lease')
 
                 return Lease.create({ property, tenants, password, active, starting, ending, price, deposit })
-                    .then(lease => lease._id)
-                    
+                    .then(lease => {
+                        return Property.findByIdAndUpdate(property , {status: 'busy'} )
+                    })
             })
     },
 
     checkLogin(id, password) {
         return Promise.resolve()
-            .then(()=> {                
-                return Lease.findOne({ _id: id })                
+            .then(() => {
+                return Lease.findOne({ _id: id })
             })
             .then(lease => {
-                if(!lease) throw Error('We cannot find the entered LeaseID')
+                if (!lease) throw Error('We cannot find the entered LeaseID')
 
-                if(lease.password != password) {
-                    throw Error ('The password is wrong, please try again')
+                if (lease.password != password) {
+                    throw Error('The password is wrong, please try again')
                 }
 
-                return Lease.findOne(lease, {password: 0})
+                return Lease.findOne(lease, { password: 0 })
             })
     },
 
     listLease() {
-        return Lease.find({}, { password:0, __v:0 }).populate('property')
+        return Lease.find({}, { password: 0, __v: 0 }).populate('property')
     },
 
-    updateLease(id, property, tenants, password, active, starting, ending, price, deposit) {
+    updateLease(id, property, tenants, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
-                validate({ property, tenants, password, active, starting, ending, price, deposit })
+                validate({ property, tenants, active, starting, ending, price, deposit })
 
                 return Lease.findOne({ _id: id }).populate('property')
             })
             .then(lease => {
-
-                if(lease.property._id == property) {
-                    return Lease.updateOne({id}, { property, tenants, password, active, starting, ending, price, deposit })
-                } else if (lease.property.status == 'busy') {
-                    throw Error('the property you selected already has an active lease')
-                } 
-
-                return Lease.updateOne({_id: id}, { property, tenants, password, active, starting, ending, price, deposit })
-                
+                    return Lease.updateOne({ _id: id }, { property, tenants, active, starting, ending, price, deposit })
             })
     },
 
@@ -400,7 +394,7 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                return Lease.findOne({ _id: id }, { password: 0 , __v:0 }).populate('tenants').populate('property')
+                return Lease.findOne({ _id: id }, { password: 0, __v: 0 }).populate('tenants').populate('property')
             })
             .then(lease => {
                 if (!lease) throw Error('lease does not exist')
@@ -415,10 +409,10 @@ module.exports = {
 
     retrieveLeaseEnding() {
         let timeStamp = new Date
-        let nowPlusMonth = new Date(timeStamp.setMonth(timeStamp.getMonth()+1))
+        let nowPlusMonth = new Date(timeStamp.setMonth(timeStamp.getMonth() + 1))
         let now = new Date
 
-        return Lease.find({ending: {'$gte': now, '$lte':nowPlusMonth}},{password: 0, __v: 0}).populate('property')
+        return Lease.find({ ending: { '$gte': now, '$lte': nowPlusMonth } }, { password: 0, __v: 0 }).populate('property')
     },
 
     removeLease(id) {
@@ -426,10 +420,17 @@ module.exports = {
             .then(() => {
                 validate({ id })
 
-                return Lease.findOne({ _id: id })
+                return Lease.findOne({ _id: id }).populate('property')
             })
             .then(lease => {
-                if (!lease) throw Error('lease does not exist')
+                if (!lease) {
+                    throw Error('lease does not exist')
+                } else if (lease.active) {                
+                    return Property.findByIdAndUpdate(lease.property.id , {status: 'free'} )
+                        .then(() => {
+                            return Lease.deleteOne({ _id: id })
+                        })
+                }
 
                 return Lease.deleteOne({ _id: id })
             })
@@ -445,10 +446,12 @@ module.exports = {
                 return Tenant.findOne({ documentId })
             })
             .then(tenant => {
-                if (tenant) throw Error('tenant already exists')
-
-                return Tenant.create({ name, surname, documentId, active, email, phoneNumber, nationality })
-                    .then(() => documentId)
+                if (tenant) {
+                    return tenant._id
+                } else {
+                    return Tenant.create({ name, surname, documentId, active, email, phoneNumber, nationality })
+                    .then((_tenant) =>_tenant._id )
+                }                
             })
     },
 

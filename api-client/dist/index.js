@@ -155,9 +155,9 @@ var rentManagerApi = {
             return data.data.data;
         });
     },
-    updateLease: function updateLease(id, property, tenants, password, active, starting, ending, price, deposit) {
-        return axios.put(this._url() + '/lease/' + id, { property: property, tenants: tenants, password: password, active: active, starting: starting, ending: ending, price: price, deposit: deposit }).then(function (data) {
-            return data.data.data;
+    updateLease: function updateLease(id, property, tenants, active, starting, ending, price, deposit) {
+        return axios.put(this._url() + '/lease/' + id, { property: property, tenants: tenants, active: active, starting: starting, ending: ending, price: price, deposit: deposit }).then(function (data) {
+            return data.data;
         });
     },
     getOneLease: function getOneLease(id) {

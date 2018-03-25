@@ -53,7 +53,7 @@ class PropertiesList extends Component {
         }        
     }
 
-    DeleteProperty = (reference) => {
+    deleteProperty = (reference) => {
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -79,7 +79,7 @@ class PropertiesList extends Component {
           })
     }
 
-    EditProperty = (reference) => {
+    editProperty = (reference) => {
         this.props.onClickEdit(reference)
     }
 
@@ -107,7 +107,7 @@ class PropertiesList extends Component {
                                     <NavLink 
                                     className="btn btn-warning"
                                     onClick={(e)=> {e.preventDefault;
-                                    this.EditProperty(property.reference)}}
+                                    this.editProperty(property.reference)}}
                                     to= '/back/admin/properties/edit'
                                     >
                                     Edit
@@ -115,7 +115,7 @@ class PropertiesList extends Component {
                                     <button 
                                     className="btn btn-danger"
                                     onClick= {(e)=>{e.preventDefault;
-                                    this.DeleteProperty(property.reference)}}>
+                                    this.deleteProperty(property.reference)}}>
                                     Delete
                                     </button>
                                 </div>
