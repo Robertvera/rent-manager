@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
-const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, retrievePaymentByLeaseId,retrievePaymentByDate, updatePayment, listLease, registerLease,updateLease, retrieveLease, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction, checkLogin, retrievePaymentByStatus, retrievePropertyByStatus, retrievePropertyByFilters, retrieveLeaseEnding, retrieveLeaseByStatus } = require('./handlers')
+const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyByOwner, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, retrievePaymentByLeaseId,retrievePaymentByDate, updatePayment, listLease, registerLease,updateLease, retrieveLease, checkLeaseStatus, retrieveLeaseByProperty, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction, checkLogin, retrievePaymentByStatus, retrievePropertyByStatus, retrievePropertyByFilters, retrieveLeaseEnding, retrieveLeaseByStatus } = require('./handlers')
 
 const router = Router()
 
@@ -50,6 +50,8 @@ router.get('/properties-by-filters/:status&:hood', retrievePropertyByFilters)
 
 router.delete('/property/:reference', removeProperty)
 
+router.get('/properties-by-owner/:id', retrievePropertyByOwner)
+
 // PAYMENT ROUTES
 
 router.get('/payments', listPayment)
@@ -89,6 +91,10 @@ router.put('/lease/login/:id', jsonBodyParser, checkLogin)
 router.get('/leases-ending', retrieveLeaseEnding)
 
 router.get('/leases-by-status/:status', retrieveLeaseByStatus)
+
+router.put('/lease-check-status/:id', checkLeaseStatus)
+
+router.get('/leases-by-property/:id', retrieveLeaseByProperty)
 
 // TRANSFER ROUTES
 

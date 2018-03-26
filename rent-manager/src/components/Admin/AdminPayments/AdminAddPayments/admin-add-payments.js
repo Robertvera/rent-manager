@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import './admin-add-payments.css';
 import rentManagerApi from '../../../../api/api-client'
+import swal from 'sweetalert2'
 
 class AdminAddPayments extends Component {
     constructor(props) {
@@ -21,11 +22,47 @@ class AdminAddPayments extends Component {
             })
     }
 
-    handleChangeLease = (e) => {
+    handleChange = (e) => {
         let { name, value } = e.target;
-        let lease = { ...this.state.lease };
-        lease[name] = value;
-        this.setState({ lease });
+        let payment = { ...this.state.payment };
+        payment[name] = value;
+        this.setState({ payment });
+    }
+
+    createPayment = () => {
+        
+        const { concept, property, type, status, amount } = this.state.payment
+        const dueDate = new Date(this.state.payment.dueDate).toISOString()
+
+        rentManagerApi.getLeasesByProperty(property)
+            .then(lease => {            
+            rentManagerApi.createPayment(concept, type, lease._id, property, status, dueDate, null, amount)
+            .then(result => {
+                if(result.status === 'OK') {
+                    swal({
+                        title: 'Payment created!',
+                        text: 'You are being redirected',
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        onOpen: () => {
+                          swal.showLoading()
+                        }
+                      })
+                      .then(()=> {
+                        this.props.history.push("/back/admin/payments")
+                     })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      })
+                }
+            })
+            })
+
+        
     }
 
     render() {
@@ -43,7 +80,7 @@ class AdminAddPayments extends Component {
                                         <select
                                             className="custom-select col-12"
                                             name="property"
-                                            onChange={this.handleChangeLease}
+                                            onChange={this.handleChange}
                                             >
                                             <option value="">Select a property</option>
                                             {this.state.properties.map(property => {
@@ -52,26 +89,63 @@ class AdminAddPayments extends Component {
                                         </select>
                                     </div>
                                     {/* CONCEPT, CHECKBOX */}
-                                    <div className="form-group col-10">
+                                    <div className="form-group col-9">
                                         <label htmlFor="concept">Concept</label>
-                                        <input type="text" className="form-control" id="concept" placeholder="Concept" defaultValue />
+                                        <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        id="concept" 
+                                        name="concept"
+                                        placeholder="Concept" 
+                                        onChange={this.handleChange} />
                                     </div>
-                                    <div className="pt-5 col-2">
-                                        <input type="checkbox" />
-                                        <label htmlFor="checkbox">Booking fee?</label>
+                                    <div className="col-3">
+                                        <label htmlFor="type">Type</label>
+                                        <select 
+                                        className="form-control" 
+                                        name="type"
+                                        onChange={this.handleChange}
+                                        >
+                                            <option value="">Type</option>
+                                            <option value="rent">Rent</option>
+                                            <option value="deposit">Deposit</option>
+                                            <option value="utilities">Utilities</option>
+                                            <option value="agency">Agency Fee</option>
+                                            <option value="booking">Booking Fee</option>                                            
+                                        </select>
+                                        
                                     </div>
                                     {/* DUE DATE, PRICE, STATUS */}
                                     <div className="form-group col-sm-12 col-md-6 col-lg-4">
                                         <label htmlFor="due-date">Due date</label>
-                                        <input type="text" className="form-control" id="due-date" placeholder="Due date" defaultValue="25/08/1998" />
+                                        <input 
+                                        type="date" 
+                                        className="form-control" 
+                                        id="due-date" 
+                                        name="dueDate"
+                                        placeholder="Due date"
+                                        onChange={this.handleChange}
+                                         />
                                     </div>
                                     <div className="form-group col-sm-12 col-md-6 col-lg-4">
                                         <label htmlFor="price">Price</label>
-                                        <input type="text" className="form-control" id="price" placeholder="Price" defaultValue="2.000 €" />
+                                        <input 
+                                        type="number" 
+                                        className="form-control" 
+                                        id="price" 
+                                        name="amount"
+                                        placeholder="Price" 
+                                        onChange={this.handleChange}
+                                         />
                                     </div>
                                     <div className="form-group col-sm-12 col-md-6 col-lg-4">
                                         <label htmlFor="status">Status</label>
-                                        <select className="custom-select" name="status">
+                                        <select 
+                                        className="custom-select" 
+                                        name="status"
+                                        onChange={this.handleChange}
+                                        >   
+                                            <option value=""> </option>
                                             <option value="paid">Paid</option>
                                             <option value="pending">Pending</option>
                                         </select>
@@ -82,7 +156,11 @@ class AdminAddPayments extends Component {
                         {/* SAVE BUTTON */}
                         <div className="container-fluid col-7 p-0">
                             <div className="row justify-content-center">
-                                <button type="button" className="btn btn-danger col-3 mb-5">SAVE</button>
+                                <button 
+                                type="button" 
+                                className="btn btn-danger col-3 mb-5"
+                                onClick={this.createPayment}
+                                >SAVE</button>
                             </div>
                         </div>
                     </div>
@@ -97,4 +175,4 @@ class AdminAddPayments extends Component {
 }
 
 
-export default AdminAddPayments
+export default withRouter(AdminAddPayments)

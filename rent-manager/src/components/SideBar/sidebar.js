@@ -64,12 +64,12 @@ conditionalMenu = (user) => {
                             Owners
                             </NavLink>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <NavLink className="nav-link" href="#" to="/back/admin/transfers">
                             <CreditCard />
                             Transfers
                             </NavLink>
-                    </li>
+                    </li> */}
                 </ul> 
                     )
                     break;

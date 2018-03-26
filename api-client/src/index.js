@@ -29,11 +29,11 @@ const rentManagerApi = {
     getOwners: function() {
         return axios.get(`${this._url()}/owners`).then(data => data.data.data)
     },
-    createOwner: function(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
-        return axios.post(`${this._url()}/owner`, {documentId, name, surname, email, phoneNumber, nationality, bankAccount, password}).then(data => data.data.data)
+    createOwner: function(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
+        return axios.post(`${this._url()}/owner`, {documentId, name, surname, email, phoneNumber, nationality, bankAccount}).then(data => data.data)
     },
-    updateOwner: function(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
-        return axios.put(`${this._url()}/owner/${documentId}`, {name, surname, email, phoneNumber, nationality, bankAccount, password}).then(data => data.data.data)
+    updateOwner: function(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
+        return axios.put(`${this._url()}/owner/${documentId}`, {name, surname, email, phoneNumber, nationality, bankAccount}).then(data => data.data)
     },
     getOneOwner: function(documentId) {
         return axios.get(`${this._url()}/owner/${documentId}`).then(data => data.data.data)
@@ -49,6 +49,9 @@ const rentManagerApi = {
     },
     getPropertiesByStatus: function(status) {
         return axios.get(`${this._url()}/properties-by-status/${status}`).then(data => data.data.data)
+    },
+    getPropertiesByOwner: function(id) {
+        return axios.get(`${this._url()}/properties-by-owner/${id}`).then(data => data.data.data)
     },
     getPropertiesByFilter: function(status, hood) {
         return axios.get(`${this._url()}/properties-by-filters/${status}&${hood}`).then(data => data.data.data)
@@ -72,7 +75,7 @@ const rentManagerApi = {
         return axios.get(`${this._url()}/payments`).then(data => data.data.data)
     },
     createPayment: function(concept, type, lease, property, status, dueDate, paymentDate, amount) {
-        return axios.post(`${this._url()}/payment`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data.data)
+        return axios.post(`${this._url()}/payment`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data)
     },
     updatePayment: function(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
         return axios.put(`${this._url()}/payment/${id}`, {concept, type, lease, property, status, dueDate, paymentDate, amount}).then(data => data.data)
@@ -107,6 +110,9 @@ const rentManagerApi = {
     getOneLease: function(id) {
         return axios.get(`${this._url()}/lease/${id}`).then(data => data.data.data)
     },
+    checkLeaseStatus: function(id) {
+        return axios.put(`${this._url()}/lease-check-status/${id}`).then(data => data.data.data)
+    },
     getLeaseSearch: function(status, query) {
         return axios.get(`${this._url()}/leases/${status}&${query}`).then(data => data.data.data)
     },
@@ -115,6 +121,9 @@ const rentManagerApi = {
     },
     getLeasesEndingSoon: function() {
         return axios.get(`${this._url()}/leases-ending`).then(data => data.data.data)
+    },
+    getLeasesByProperty: function(id) {
+        return axios.get(`${this._url()}/leases-by-property/${id}`).then(data => data.data.data)
     },
     deleteLease: function (id) {
         return axios.delete(`${this._url()}/lease/${id}`).then(data => data.data.data)

@@ -2,9 +2,9 @@ const { success, fail } = require('../api-utils')
 const logic = require('../../../logic')
 
 module.exports = (req, res) => {
-    const { params: { documentId } } = req
+    const { params: { id } } = req
 
-    logic.removeOwner(documentId)
-        .then(owner => res.json(success(owner)))
+    logic.retrieveLeaseByProperty(id)
+        .then(lease => res.json(success(lease)))
         .catch(err => res.json(fail(err.message)))
 }

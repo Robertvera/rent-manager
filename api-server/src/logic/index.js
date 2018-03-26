@@ -102,15 +102,17 @@ module.exports = {
 
     /////////////////////////////// OWNER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    registerOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
+    registerOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
         return Promise.resolve()
             .then(() => {
-                validate({ documentId, name, surname, password })
+                validate({ documentId, name, surname })
 
                 return Owner.findOne({ documentId })
             })
             .then(owner => {
                 if (owner) throw Error('owner already exists')
+
+                const password = name+surname
 
                 return Owner.create({ documentId, name, surname, email, phoneNumber, nationality, bankAccount, password })
                     .then(() => documentId)
@@ -121,17 +123,17 @@ module.exports = {
         return Owner.find({}, { __v: 0 })
     },
 
-    updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
+    updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
         return Promise.resolve()
             .then(() => {
-                validate({ documentId, name, surname, email, phoneNumber, nationality, bankAccount, password })
+                validate({ documentId, name, surname, email, phoneNumber, nationality, bankAccount})
 
                 return Owner.findOne({ documentId })
             })
             .then(owner => {
                 if (!owner) throw Error('the owner does not exists')
 
-                return Owner.updateOne({ documentId }, { name, surname, email, phoneNumber, nationality, bankAccount, password })
+                return Owner.updateOne({ documentId }, { name, surname, email, phoneNumber, nationality, bankAccount})
             })
     },
 
@@ -229,18 +231,18 @@ module.exports = {
         .then(()=> {
 
             if (starting ==="all" || ending === "all") {
-                return Payment.find({ status })
+                return Payment.find({ status }).populate('property')                
             } else if (status === "all" && starting ==="all" && ending === "all") {
-                return Payment.find({})
+                return Payment.find({}).populate('property')                
             } else if (status === 'all') {
                 let _starting = (new Date (starting)).toISOString()
                 let _ending = (new Date (ending)).toISOString()
         
-                return Payment.find({ paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 })
+                return Payment.find({ paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 }).populate('property')                
             }
             let _starting = (new Date (starting)).toISOString()
             let _ending = (new Date (ending)).toISOString()
-            return Payment.find({status, paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 })                
+            return Payment.find({status, paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 }).populate('property')                
         })
     },
 
@@ -343,6 +345,10 @@ module.exports = {
         return Property.find({ status })
     },
 
+    retrievePropertyByOwner(id) {
+        return Property.find({owner: id})
+    },
+
     removeProperty(reference) {
         return Promise.resolve()
             .then(() => {
@@ -403,6 +409,20 @@ module.exports = {
         return Lease.find({}, { password: 0, __v: 0 }).populate('property')
     },
 
+    checkLeaseStatus (id) {
+        return Promise.resolve()
+            .then(()=> {
+                return Lease.find({id}, { password: 0, __v: 0 })                            
+            })
+            .then((lease) => {
+                let now = (new Date).toISOString()
+                let isoDate = lease.ending.toISOString()                
+                    if(isoDate < now) {
+                        return Lease.updateOne({id},{active: false})
+                    }                
+            })
+    },
+
     updateLease(id, property, tenants, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
@@ -426,6 +446,18 @@ module.exports = {
                 if (!lease) throw Error('lease does not exist')
 
                 return lease
+            })
+    },
+
+    retrieveLeaseByProperty(id) {
+        return Promise.resolve()
+            .then(()=> {
+                return Lease.find({property: id})
+            })
+            .then((leases)=> {
+                for (let i = 0; i < leases.length; i++) {
+                    if (leases[i].active) return leases[i]
+                }
             })
     },
 

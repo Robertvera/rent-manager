@@ -21,6 +21,7 @@ import AdminPayments from './components/Admin/AdminPayments/admin-payments'
 import AdminAddPayments from './components/Admin/AdminPayments/AdminAddPayments/admin-add-payments'
 import AdminOwners from './components/Admin/AdminOwners/admin-owners'
 import AdminAddOwners from './components/Admin/AdminOwners/AdminAddOwners/admin-add-owners'
+import AdminEditOwners from './components/Admin/AdminOwners/AdminEditOwners/admin-edit-owners'
 import AdminTransfers from './components/Admin/AdminTransfers/admin-transfers'
 import AdminAddTransfers from './components/Admin/AdminTransfers/AdminAddTransfers/admin-add-transfers'
 import OwnerOverview from './components/Owner/OwnerOverview/owner-overview'
@@ -35,7 +36,8 @@ class App extends Component {
       leaseId: '',
       paymentId: '',
       propertyToEdit: '',
-      leaseToEdit: ''
+      leaseToEdit: '',
+      ownerToEdit: ''
      
     }
   }
@@ -58,6 +60,10 @@ class App extends Component {
 
   setLeaseEdit = (leaseId) => {
     this.setState({leaseToEdit: leaseId})
+  }
+
+  setOwnerEdit = (ownerId) => {
+    this.setState({ownerToEdit: ownerId})
   }
 
   render() {
@@ -132,10 +138,17 @@ class App extends Component {
                     <AdminAddPayments />
                   )} />
                   <Route exact path="/back/admin/owners" render={() => (
-                    <AdminOwners />
+                    <AdminOwners 
+                    ownerToEdit = {this.setOwnerEdit}
+                    />
                   )} />
                   <Route exact path="/back/admin/owners/add" render={() => (
                     <AdminAddOwners />
+                  )} />
+                  <Route exact path="/back/admin/owners/edit" render={() => (
+                    <AdminEditOwners 
+                    ownerId = {this.state.ownerToEdit}
+                    />
                   )} />
                   <Route exact path="/back/admin/transfers" render={() => (
                     <AdminTransfers />
