@@ -23,23 +23,23 @@ class LeasesList extends Component {
             })
     }
 
-    // componentWillReceiveProps = (nextProps) => {
+    componentWillReceiveProps = (nextProps) => {
 
-    //     if (nextProps != this.props) {
-    //         rentManagerApi.getPropertiesByFilter(nextProps.status, nextProps.hood)
-    //             .then(properties => {
-    //                 this.setState({properties})
+        if (nextProps != this.props) {
+            rentManagerApi.getLeasesByStatus(nextProps.status)
+                .then(leases => {
+                    this.setState({leases})
 
-    //                 if(nextProps.query) {
-    //                     rentManagerApi.getPropertySearch(nextProps.status, nextProps.hood, nextProps.query)
-    //                         .then(filteredProperties => {
-    //                             console.log(filteredProperties)
-    //                             this.setState({properties: filteredProperties})
-    //                         })
-    //                 }
-    //         })            
-    //     }        
-    // }
+                    if(nextProps.query) {
+                        rentManagerApi.getLeaseSearch(nextProps.status, nextProps.query)
+                            .then(filteredLeases => {
+                                console.log(filteredLeases)
+                                this.setState({leases: filteredLeases})
+                            })
+                    }
+            })            
+        }        
+    }
 
     deleteLease = (id) => {
         swal({

@@ -163,7 +163,7 @@ class AdminEditLeases extends Component {
                         id="ending-date"
                         name="ending"
                         placeholder="Ending date"
-                        defaultValue={this.state.lease.ending}
+                        defaultValue={this.formatDate(this.state.lease.ending)}
                         onChange={this.handleChangeLease}
                       />
                     </div>

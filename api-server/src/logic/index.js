@@ -183,7 +183,7 @@ module.exports = {
     },
 
     listPayment() {
-        return Payment.find({}, { _id: 0, __v: 0 })
+        return Payment.find({}, { _id: 0, __v: 0 }).populate('property')
     },
 
     updatePayment(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
@@ -222,6 +222,26 @@ module.exports = {
             .then(payments => {
                 return payments
             })
+    },
+
+    retrievePaymentByDate(status, starting, ending) {
+        return Promise.resolve()
+        .then(()=> {
+
+            if (starting ==="all" || ending === "all") {
+                return Payment.find({ status })
+            } else if (status === "all" && starting ==="all" && ending === "all") {
+                return Payment.find({})
+            } else if (status === 'all') {
+                let _starting = (new Date (starting)).toISOString()
+                let _ending = (new Date (ending)).toISOString()
+        
+                return Payment.find({ paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 })
+            }
+            let _starting = (new Date (starting)).toISOString()
+            let _ending = (new Date (ending)).toISOString()
+            return Payment.find({status, paymentDate: { '$gte': _starting, '$lte': _ending } }, { __v: 0 })                
+        })
     },
 
     retrievePaymentByStatus(status) {
@@ -342,7 +362,7 @@ module.exports = {
     /////////////////////////////// LEASE METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-    registerLease(property, tenants, password, active, starting, ending, price, deposit) {
+    registerLease(property, tenants, active, starting, ending, price, deposit) {
         return Promise.resolve()
             .then(() => {
                 return Property.findOne({ _id: property })
@@ -350,9 +370,15 @@ module.exports = {
             .then(_property => {
                 if (_property.status == 'busy') throw Error('the property you selected already has an active lease')
 
+                const password = _property.reference
+
                 return Lease.create({ property, tenants, password, active, starting, ending, price, deposit })
                     .then(lease => {
                         return Property.findByIdAndUpdate(property , {status: 'busy'} )
+                        .then(() => {
+                            return Lease.findById({_id: lease._id})
+
+                        })                        
                     })
             })
     },
@@ -403,8 +429,37 @@ module.exports = {
             })
     },
 
-    retrieveLeaseQuery(query) {
-        return Lease.find({ $or: [{ property: new RegExp(query, 'i') }] }, { _id: 0, password: 0, __v: 0 })
+    retrieveLeaseQuery(status, query) {
+        return Promise.resolve()
+            .then(()=> {
+                if (status === 'all') {
+                    return Lease.find({}, { __v: 0 }).populate('property')
+                    .then((leases) => {
+                        let _query = query.toUpperCase()
+                        let filtered = leases.filter((lease)=> {
+                            return lease.property.reference.includes(_query)
+                        })
+                        return filtered
+                    })                    
+                } else {
+                    return Lease.find({active: status}).populate('property')
+                        .then((leases) => {
+                            let _query = query.toUpperCase()
+                            let filtered = leases.filter((lease)=> {
+                                return lease.property.reference.includes(_query)
+                            })
+                            return filtered
+                        })                    
+            }})
+            
+    },
+
+    retrieveLeaseByStatus(status) {
+        if (status === 'all') {
+            return Lease.find({}, { __v: 0 }).populate('tenants').populate('property')
+        } else {
+            return Lease.find({ active: status }, { __v: 0 }).populate('tenants').populate('property')
+        }        
     },
 
     retrieveLeaseEnding() {

@@ -7,41 +7,58 @@ class LeasesFilters extends Component {
         super(props)
         // this.state = {
 
+
         // }
     }
 
-    // handleChange = (e) => {
+    keepStatus = (status) => {
+        this.props.onFilterByStatus(status)
+    }
 
+    // keepStarting = (starting) => {
+    //     this.props.onFilterByStarting(starting)
     // }
+
+    // keepEnding = (ending) => {
+    //     this.props.onFilterByEnding(ending)
+    // }
+
+    keepQuery = (query) => {
+        this.props.onFilterByQuery(query)
+    }
 
     render() {
         return (
             <div className="card col-12 py-3">
                 <div className="container-fluid">
                     <div className="row justify-content-between">
-                        <select className="custom-select col-lg-2 col-md-5 col-sm-12" name="status">
-                            <option value="active">Active</option>
-                            <option value="closed">Closed</option>
+                        <select 
+                        className="custom-select col-lg-2 col-md-5 col-sm-12" 
+                        name="status"
+                        onChange={(e)=> {this.keepStatus(e.target.value)}}
+                        >
+                            <option value="all">All</option>
+                            <option value={true}>Active</option>
+                            <option value={false}>Closed</option>
                         </select>
-                        <select className="custom-select col-lg-2 col-md-5 col-sm-12" name="starting-date">
-                            <option value="barceloneta">January 18</option>
-                            <option value="born">January 18</option>
-                            <option value="eixample">January 18</option>
-                            <option value="gothic">January 18</option>
-                            <option value="gracia">January 18</option>
-                            <option value="poble-nou">January 18</option>
-                            <option value="raval">January 18</option>
-                        </select>
-                        <select className="custom-select col-lg-2 col-md-5 col-sm-12" name="ending-date">
-                            <option value="barceloneta">January 18</option>
-                            <option value="born">January 18</option>
-                            <option value="eixample">January 18</option>
-                            <option value="gothic">January 18</option>
-                            <option value="gracia">January 18</option>
-                            <option value="poble-nou">January 18</option>
-                            <option value="raval">January 18</option>
-                        </select>
-                        <input type="text" className="form-control col-lg-2 col-md-5 col-sm-12" placeholder="Search by property" />
+                        {/* <input 
+                        type="date" 
+                        className="form-control col-lg-2 col-md-5 col-sm-12" 
+                        name="starting-date"
+                        onChange={(e)=> {this.keepStarting(e.target.value)}}
+                        />
+                        <input 
+                        type="date" 
+                        className="form-control col-lg-2 col-md-5 col-sm-12" 
+                        name="ending-date"
+                        onChange={(e)=> {this.keepEnding(e.target.value)}}
+                        /> */}
+                        <input 
+                        type="text" 
+                        className="form-control col-lg-2 col-md-5 col-sm-12" 
+                        placeholder="Search by property" 
+                        onChange={(e)=> {this.keepQuery(e.target.value)}}
+                        />
                         <div className="col-lg-2 col-md-12 col-sm-12 p-0">
                             <NavLink to="leases/add"><button type="button" className="btn btn-success">+ Add new lease</button></NavLink>
                         </div>

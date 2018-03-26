@@ -6,6 +6,7 @@ const retrievePayment = require('./retrievePayment')
 const retrievePaymentQuery = require('./retrievePaymentQuery')
 const retrievePaymentByLeaseId = require('./retrievePaymentByLeaseId.js')
 const retrievePaymentByStatus = require('./retrievePaymentByStatus')
+const retrievePaymentByDate = require ('./retrievePaymentByDate.js')
 
 module.exports = {
     listPayment,
@@ -15,5 +16,6 @@ module.exports = {
     retrievePayment,
     retrievePaymentQuery,
     retrievePaymentByLeaseId,
-    retrievePaymentByStatus
+    retrievePaymentByStatus,
+    retrievePaymentByDate
 }
