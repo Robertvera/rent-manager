@@ -1,6 +1,6 @@
 const { listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery } = require('./tenantHandlers')
 const { listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyByOwner, retrievePropertyQuery, retrievePropertyByStatus, retrievePropertyByFilters } = require('./propertyHandlers')
-const { listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery } = require('./ownerHandlers')
+const { listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, checkLoginOwner, retrieveOwnerQuery } = require('./ownerHandlers')
 const { listPayment, registerPayment, removePayment, updatePayment, retrievePayment, retrievePaymentQuery, retrievePaymentByLeaseId, retrievePaymentByDate, retrievePaymentByStatus } = require('./paymentHandlers')
 const { listLease, registerLease, removeLease, retrieveLease, retrieveLeaseQuery, retrieveLeaseByProperty, updateLease, checkLeaseStatus, checkLogin, retrieveLeaseEnding, retrieveLeaseByStatus } = require('./leaseHandlers') 
 const { listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer } = require('./transferHandlers') 
@@ -24,6 +24,7 @@ module.exports = {
     retrievePropertyByOwner,
     listOwner,
     registerOwner,
+    checkLoginOwner,
     removeOwner,
     updateOwner,
     retrieveOwner,

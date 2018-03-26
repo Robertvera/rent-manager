@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
-const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyByOwner, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, retrievePaymentByLeaseId,retrievePaymentByDate, updatePayment, listLease, registerLease,updateLease, retrieveLease, checkLeaseStatus, retrieveLeaseByProperty, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction, checkLogin, retrievePaymentByStatus, retrievePropertyByStatus, retrievePropertyByFilters, retrieveLeaseEnding, retrieveLeaseByStatus } = require('./handlers')
+const {listTenant, registerTenant, removeTenant, retrieveTenant, retrieveTenantQuery, listProperty, registerProperty, updateProperty, removeProperty, retrieveProperty, retrievePropertyByOwner, retrievePropertyQuery, listOwner, registerOwner, removeOwner, updateOwner,checkLoginOwner, retrieveOwner, retrieveOwnerQuery, listPayment, registerPayment, removePayment, retrievePayment, retrievePaymentQuery, retrievePaymentByLeaseId,retrievePaymentByDate, updatePayment, listLease, registerLease,updateLease, retrieveLease, checkLeaseStatus, retrieveLeaseByProperty, retrieveLeaseQuery, removeLease, listTransfer, registerTransfer, removeTransfer, retrieveTransfer, retrieveTransferQuery, updateTransfer, listDeduction, registerDeduction, retrieveDeduction, checkLogin, retrievePaymentByStatus, retrievePropertyByStatus, retrievePropertyByFilters, retrieveLeaseEnding, retrieveLeaseByStatus } = require('./handlers')
 
 const router = Router()
 
@@ -31,6 +31,8 @@ router.get('/owner/:documentId', retrieveOwner)
 router.get('/owners/:query', retrieveOwnerQuery)
 
 router.delete('/owner/:documentId', removeOwner)
+
+router.put('/owner/login/:documentId', jsonBodyParser, checkLoginOwner)
 
 // PROPERTY ROUTES
 

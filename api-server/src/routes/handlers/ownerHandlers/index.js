@@ -4,6 +4,7 @@ const removeOwner = require('./removeOwner')
 const retrieveOwner = require('./retrieveOwner')
 const retrieveOwnerQuery = require('./retrieveOwnerQuery')
 const updateOwner = require('./updateOwner')
+const checkLoginOwner = require('./checkLoginOwner')
 //...
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
     removeOwner,
     updateOwner,
     retrieveOwner,
-    retrieveOwnerQuery
+    retrieveOwnerQuery,
+    checkLoginOwner
 }

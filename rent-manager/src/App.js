@@ -34,6 +34,7 @@ class App extends Component {
     this.state = {
       user: '',
       leaseId: '',
+      ownerId: '',
       paymentId: '',
       propertyToEdit: '',
       leaseToEdit: '',
@@ -48,6 +49,10 @@ class App extends Component {
 
   setLeaseId = (leaseId) => {
     this.setState( {leaseId} )
+  }
+
+  setOwnerId = (ownerId) => {
+    this.setState( {ownerId} )
   }
 
   setPaymentId = (paymentId) => {
@@ -75,6 +80,7 @@ class App extends Component {
               <Home 
               onClickButton={this.setUserType} 
               leaseIdHandler={this.setLeaseId}
+              ownerIdHandler={this.setOwnerId}
               />
             )} />
             <Route path="/back" render={() => (

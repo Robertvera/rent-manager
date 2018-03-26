@@ -137,6 +137,22 @@ module.exports = {
             })
     },
 
+    checkLoginOwner(documentId, password) {
+        return Promise.resolve()
+            .then(() => {
+                return Owner.findOne({ documentId })
+            })
+            .then(owner => {
+                if (!owner) throw Error('We cannot find the entered ID')
+
+                if (owner.password != password) {
+                    throw Error('The password is wrong, please try again')
+                }
+
+                return Owner.findOne(owner, { password: 0 })
+            })
+    },
+
     retrieveOwner(documentId) {
         return Promise.resolve()
             .then(() => {

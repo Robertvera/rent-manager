@@ -35,6 +35,9 @@ const rentManagerApi = {
     updateOwner: function(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
         return axios.put(`${this._url()}/owner/${documentId}`, {name, surname, email, phoneNumber, nationality, bankAccount}).then(data => data.data)
     },
+    checkLoginOwner: function (documentId, password) {
+        return axios.put(`${this._url()}/owner/login/${documentId}`, {password})
+    },
     getOneOwner: function(documentId) {
         return axios.get(`${this._url()}/owner/${documentId}`).then(data => data.data.data)
     },

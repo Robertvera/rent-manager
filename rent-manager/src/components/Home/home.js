@@ -12,6 +12,9 @@ class Home extends Component {
             tenantVisible: false,
             leaseId: '',
             leasePassword: '',
+            ownerVisible: false,
+            ownerId:'',
+            ownerPassword:'',
             loggedIn: null
         }
 
@@ -35,9 +38,27 @@ class Home extends Component {
         )
     }
 
+    openModalOwner = () => {
+        this.setState(
+            {
+                ownerVisible: true,
+            }
+        )
+    }
+
+    modalCloseOwner = () => {
+        this.setState(
+            { ownerVisible: false }
+        )
+    }
+
     keepLeaseId = leaseId => this.setState({ leaseId })
 
     keepLeasePassword = leasePassword => this.setState({ leasePassword })
+
+    keepOwnerId = ownerId => this.setState({ ownerId })
+
+    keepOwnerPassword = ownerPassword => this.setState({ ownerPassword })
 
     tenantLogin = (leaseId, password) => {
         return rentManagerApi.checkLogin(leaseId, password)
@@ -55,6 +76,26 @@ class Home extends Component {
 
     storeLeaseId = (lease) => {
         sessionStorage.setItem('leaseId', (lease.data.data._id))
+
+        console.log(sessionStorage)
+    }
+
+    ownerLogin = (ownerId, password) => {
+        return rentManagerApi.checkLoginOwner(ownerId, password)
+            .then(data => {
+                if (data.data.status.toString() === 'OK') {
+                    this.storeOwnerId(data)
+                    this.setState({ loggedIn: true })
+                    this.props.ownerIdHandler(ownerId)
+                    this.props.history.push("/back/owner/overview")
+                } else {
+                    this.setState({ loggedIn: false })
+                }
+            })
+    }
+
+    storeOwnerId = (owner) => {
+        sessionStorage.setItem('ownerId', (owner.data.data.documentId))
 
         console.log(sessionStorage)
     }
@@ -112,16 +153,16 @@ class Home extends Component {
                                 <h2>OWNER</h2>
                                 <p className="text-justify text-center">Be informed of everything related to your property, misunderstandings are over.
                                 </p>
-                                <NavLink
+                                <button
                                     className="btn btn-danger mx-auto"
                                     role="button"
-                                    onClick={(e) => { e.preventDefault; this.sendUserType('owner') }}
-                                    to="/back/owner/overview">Log in as owner »</NavLink>
+                                    onClick={(e) => { e.preventDefault; this.sendUserType('owner'); this.openModalOwner() }}
+                                    >Log in as owner »</button>
                             </div>
                         </section>
                     </div>
                 </div>
-                {/* MODAL */}
+                {/* MODAL TENANT*/}
 
                 <Modal visible={this.state.tenantVisible} onClickBackdrop={(e) => { e.preventDefault; this.modalClose() }}>
                     <div className="modal-header">
@@ -155,6 +196,49 @@ class Home extends Component {
                                     onClick={(e) => {
                                         e.preventDefault;
                                         this.tenantLogin(this.state.leaseId, this.state.leasePassword)
+                                    }}
+                                >
+                                    Log in
+                                </button>
+                        </form>
+                    </div>
+
+                </Modal>
+
+                {/* MODAL OWNER*/}
+
+                <Modal visible={this.state.ownerVisible} onClickBackdrop={(e) => { e.preventDefault; this.modalCloseOwner() }}>
+                    <div className="modal-header">
+                        <h5 className="modal-title">Owner Log in</h5>
+                    </div>
+                    <div className="modal-body">
+                        <p>In order to log in, please insert your ID and password:</p>
+                        <form>
+                            <div className="form-group">
+                                <input
+                                    type="username"
+                                    className="form-control"
+                                    id="inputLeaseId"
+                                    placeholder="ID"
+                                    onChange={(e) => this.keepOwnerId(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="Password"
+                                    onChange={(e) => this.keepOwnerPassword(e.target.value)}
+                                />
+                            </div>
+                            {this.state.loggedIn == false ? this.loginWarning() : null}
+                                <button
+                                    role="button"
+                                    className="btn btn-success"
+                                    onClick={(e) => {
+                                        e.preventDefault;
+                                        this.ownerLogin(this.state.ownerId, this.state.ownerPassword)
                                     }}
                                 >
                                     Log in
