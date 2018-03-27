@@ -28,6 +28,7 @@ import OwnerOverview from './components/Owner/OwnerOverview/owner-overview'
 import OwnerPayments from './components/Owner/OwnerPayments/owner-payments'
 
 
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -168,7 +169,6 @@ class App extends Component {
                   <Route exact path="/back/owner/payments" render={() => (
                     <OwnerPayments />
                   )} />
-                  
 
                   
                 </div>

@@ -51,6 +51,8 @@ class AdminAddLeases extends Component {
     this.setState(
       this.state.lease.tenants = tenantArray
     )
+
+    return
   }
 
   handleChangeTenants = (e) => {
@@ -80,11 +82,21 @@ class AdminAddLeases extends Component {
 
       rentManagerApi.createTenant(name, surname, documentId, true, email, phoneNumber, nationality)
         .then(tenant => {
-          tenantsArray.push(tenant)
+          tenantsArray.push(tenant)          
         }).then(() => {
-          this.setState({
-            tenants: tenantsArray
+          swal({
+            position: 'top-end',
+            type: 'success',
+            title: 'Tenant saved',
+            showConfirmButton: false,
+            timer: 1500
           })
+          .then(()=> {
+            this.setState({
+              tenants: tenantsArray
+            })          
+          })
+          
         })
     }
   }
@@ -219,8 +231,6 @@ class AdminAddLeases extends Component {
                       />
                     </div>
 
-                    <PlusCircle onClick={this.testingDates} />
-
                   </div>
                 </div>
               </form>
@@ -308,12 +318,14 @@ class AdminAddLeases extends Component {
                           onChange={this.handleChangeTenants}
                         />
                       </div>
-                      <PlusSquare
+                      <div className="text-right">
+                      Click to register the new tenant&nbsp;&nbsp;<PlusSquare
                         onClick={(e) => {
                           e.preventDefault;
                           this.registerTenant();
-                        }}
+                        }} 
                       />
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -321,8 +333,9 @@ class AdminAddLeases extends Component {
 
 
               {/* ADD BUTTON */}
-              <div className="col-7">
-                <PlusCircle
+              <div className="col-7 mb-5">
+              <hr/>
+                Click to add a new tenant&nbsp;&nbsp;<PlusCircle
                   onClick={(e) => {
                     e.preventDefault;
                     this.addTenant();

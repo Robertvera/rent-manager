@@ -5,6 +5,7 @@ import './admin-add-properties.css';
 import { PlusCircle } from 'react-feather'
 import rentManagerApi from '../../../../api/api-client'
 import swal from 'sweetalert2'
+import FileUpload from '../../../FileUpload/file-upload'
 
 class AdminAddProperties extends Component {
 
@@ -180,8 +181,9 @@ class AdminAddProperties extends Component {
                         </form>                                
                         <div className="card col-lg-6 col-sm-12 p-0">
                             <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
-                            <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
-                        </div>                       
+                            <FileUpload />      
+                            
+                        </div>
                     </div>
                 </div>
                 :undefined}
