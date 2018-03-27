@@ -158,7 +158,7 @@ module.exports = {
             .then(() => {
                 validate({ documentId })
 
-                return Owner.findOne({ documentId }, { _id: 0, __v: 0 })
+                return Owner.findOne({ documentId }, { __v: 0 })
             })
             .then(owner => {
                 if (!owner) throw Error('owner does not exist')
@@ -239,6 +239,13 @@ module.exports = {
             })
             .then(payments => {
                 return payments
+            })
+    },
+
+    retrievePaymentByProperty(propertyId) {
+        return Promise.resolve()
+            .then(() => {
+                return Payment.find({ property: propertyId })
             })
     },
 
@@ -465,7 +472,7 @@ module.exports = {
             })
     },
 
-    retrieveLeaseByProperty(id) {
+    retrieveCurrentLeaseByProperty(id) {
         return Promise.resolve()
             .then(()=> {
                 return Lease.find({property: id})
@@ -474,6 +481,14 @@ module.exports = {
                 for (let i = 0; i < leases.length; i++) {
                     if (leases[i].active) return leases[i]
                 }
+            })
+
+    },
+    
+    retrieveLeaseByProperty(id) {
+        return Promise.resolve()
+            .then(()=> {
+                return Lease.find({property: id})
             })
     },
 

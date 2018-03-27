@@ -218,7 +218,7 @@ class Home extends Component {
                                 <input
                                     type="username"
                                     className="form-control"
-                                    id="inputLeaseId"
+                                    id="OwnerId"
                                     placeholder="ID"
                                     onChange={(e) => this.keepOwnerId(e.target.value)}
                                 />
@@ -227,7 +227,7 @@ class Home extends Component {
                                 <input
                                     type="password"
                                     className="form-control"
-                                    id="inputPassword"
+                                    id="inputPasswordOwner"
                                     placeholder="Password"
                                     onChange={(e) => this.keepOwnerPassword(e.target.value)}
                                 />

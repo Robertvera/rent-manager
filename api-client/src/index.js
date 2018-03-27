@@ -89,6 +89,9 @@ const rentManagerApi = {
     getPaymentsByLeaseId: function(id) {
         return axios.get(`${this._url()}/payments-by-lease/${id}`).then(data=>data.data.data)
     },
+    getPaymentsByProperty: function(id) {
+        return axios.get(`${this._url()}/payments-by-property/${id}`).then(data=>data.data.data)
+    },
     getPaymentSearch: function(query) {
         return axios.get(`${this._url()}/payments/${query}`).then(data => data.data.data)
     },
@@ -124,6 +127,9 @@ const rentManagerApi = {
     },
     getLeasesEndingSoon: function() {
         return axios.get(`${this._url()}/leases-ending`).then(data => data.data.data)
+    },
+    getCurrentLeasesByProperty: function(id) {
+        return axios.get(`${this._url()}/current-leases-by-property/${id}`).then(data => data.data.data)
     },
     getLeasesByProperty: function(id) {
         return axios.get(`${this._url()}/leases-by-property/${id}`).then(data => data.data.data)

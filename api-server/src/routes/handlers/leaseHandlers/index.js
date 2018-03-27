@@ -8,6 +8,7 @@ const checkLogin = require('./checkLogin')
 const retrieveLeaseEnding = require('./retrieveLeaseEnding')
 const retrieveLeaseByStatus = require('./retrieveLeaseByStatus')
 const checkLeaseStatus = require('./checkLeaseStatus')
+const retrieveCurrentLeaseByProperty = require('./retrieveCurrentLeaseByProperty')
 const retrieveLeaseByProperty = require('./retrieveLeaseByProperty')
 
 module.exports = {
@@ -21,5 +22,6 @@ module.exports = {
     retrieveLeaseEnding,
     retrieveLeaseByStatus,
     checkLeaseStatus,
+    retrieveCurrentLeaseByProperty,
     retrieveLeaseByProperty
 }

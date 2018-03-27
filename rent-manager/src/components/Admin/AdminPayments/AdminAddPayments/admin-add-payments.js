@@ -34,7 +34,7 @@ class AdminAddPayments extends Component {
         const { concept, property, type, status, amount } = this.state.payment
         const dueDate = new Date(this.state.payment.dueDate).toISOString()
 
-        rentManagerApi.getLeasesByProperty(property)
+        rentManagerApi.getCurrentLeasesByProperty(property)
             .then(lease => {            
             rentManagerApi.createPayment(concept, type, lease._id, property, status, dueDate, null, amount)
             .then(result => {
