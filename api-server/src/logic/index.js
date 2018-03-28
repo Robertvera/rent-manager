@@ -322,7 +322,7 @@ module.exports = {
             .then(property => {
                 if (!property) throw Error('the property does not exist')
 
-                return Property.updateOne({ reference }, { owner, address, rooms, sqm, price, neighbourhood, status })
+                return Property.updateOne({ reference }, { owner, address, rooms, sqm, price, neighbourhood, picture, status })
             })
     },
 

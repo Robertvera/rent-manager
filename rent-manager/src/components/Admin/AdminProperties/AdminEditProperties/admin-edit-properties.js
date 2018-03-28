@@ -4,6 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 import rentManagerApi from '../../../../api/api-client'
 import swal from 'sweetalert2'
 import { PlusCircle } from 'react-feather';
+import firebase from 'firebase'
 
 class AdminEditProperties extends Component {
 
@@ -11,7 +12,9 @@ class AdminEditProperties extends Component {
         super(props)
         this.state = {
             property: '',
-            owners: ''
+            owners: '',
+            uploadValue: 0,
+            picture:''
             
 
         }
@@ -20,7 +23,7 @@ class AdminEditProperties extends Component {
     componentDidMount = () => {
         rentManagerApi.getOneProperty(this.props.propertyId)
             .then(property => {
-                this.setState({property})
+                this.setState({property, picture: property.picture})
             })
 
         rentManagerApi.getOwners()
@@ -36,6 +39,25 @@ class AdminEditProperties extends Component {
         this.setState({property});
     }
 
+    handleUpload = (e) => {
+        const file = e.target.files[0]
+        const storageRef = firebase.storage().ref(`/pictures/${file.name}`)
+        const task = storageRef.put(file)
+
+        task.on('state_changed', snapshot => {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            this.setState({
+                uploadValue: percentage
+            })
+        }, error => {console.log(error.message)
+        }, ()=> {
+            this.setState({
+                uploadValue: 100,
+                picture: task.snapshot.downloadURL
+            })
+        })
+    }
+
     saveChanges = (e) => {
         e.preventDefault()
         swal({
@@ -47,7 +69,8 @@ class AdminEditProperties extends Component {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, update!'
           }).then((result) => {                
-            let { reference, owner, address, rooms, sqm, price, neighbourhood, picture, status } = this.state.property
+            let { reference, owner, address, rooms, sqm, price, neighbourhood, status } = this.state.property
+            let { picture } = this.state
             let roomsInt = parseInt(rooms)
             let sqmInt = parseInt(sqm)
             let priceInt = parseInt(price)
@@ -188,8 +211,13 @@ class AdminEditProperties extends Component {
                             </div>
                         </form>
                         <div className="card col-lg-6 col-sm-12 p-0">
-                            <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
-                            <a href="#" className="btn btn-success">UPLOAD IMAGE</a>
+                            <img className="card-img-top upload-image" src={this.state.picture} alt="card-img-top" />
+                            <div className="card-body col-lg-6 col-sm-12">
+                                <progress value={this.state.uploadValue} mx="100"></progress>
+                                <br/>
+                                <input type="file" onChange={this.handleUpload}/>                                
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

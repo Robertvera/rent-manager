@@ -5,7 +5,8 @@ import './admin-add-properties.css';
 import { PlusCircle } from 'react-feather'
 import rentManagerApi from '../../../../api/api-client'
 import swal from 'sweetalert2'
-import FileUpload from '../../../FileUpload/file-upload'
+import firebase from 'firebase'
+
 
 class AdminAddProperties extends Component {
 
@@ -13,9 +14,9 @@ class AdminAddProperties extends Component {
         super(props)
         this.state = {
             property: '',
-            owners: ''
-            
-
+            owners: '',
+            uploadValue: 0,
+            picture: "../img/default-image.png"
         }
     }
 
@@ -34,10 +35,29 @@ class AdminAddProperties extends Component {
         this.setState({property});
     }
 
+    handleUpload = (e) => {
+        const file = e.target.files[0]
+        const storageRef = firebase.storage().ref(`/pictures/${file.name}`)
+        const task = storageRef.put(file)
+
+        task.on('state_changed', snapshot => {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            this.setState({
+                uploadValue: percentage
+            })
+        }, error => {console.log(error.message)
+        }, ()=> {
+            this.setState({
+                uploadValue: 100,
+                picture: task.snapshot.downloadURL
+            })
+        })
+    }
+
     createProperty = (e) => {
         e.preventDefault() 
         let { reference, owner, address, rooms, sqm, price, neighbourhood } = this.state.property       
-        let picture = 'http://www.freshpalace.com/wp-content/uploads/2013/03/Beach-Apartment-Mumbai-India-Living-Space-Glass-Walls.jpg'
+        let picture = this.state.picture
         let status = 'free'
         let roomsInt = parseInt(rooms)
         let sqmInt = parseInt(sqm)
@@ -180,8 +200,12 @@ class AdminAddProperties extends Component {
                             </div>                
                         </form>                                
                         <div className="card col-lg-6 col-sm-12 p-0">
-                            <img className="card-img-top upload-image" src="../img/default-image.png" alt="card-img-top" />
-                            <FileUpload />      
+                            <img className="card-img-top upload-image" src={this.state.picture} alt="card-img-top" />
+                            <div className="card-body col-lg-6 col-sm-12">
+                                <progress value={this.state.uploadValue} mx="100"></progress>
+                                <br/>
+                                <input type="file" onChange={this.handleUpload}/>
+                            </div>
                             
                         </div>
                     </div>
