@@ -73,7 +73,7 @@ class Home extends Component {
                 }
             })
     }
-
+    
     storeLeaseId = (lease) => {
         sessionStorage.setItem('leaseId', (lease.data.data._id))
 

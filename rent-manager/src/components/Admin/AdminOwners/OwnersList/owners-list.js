@@ -90,7 +90,6 @@ class OwnersList extends Component {
                                 <th scope="col">NAME</th>
                                 <th scope="col">E-MAIL</th>
                                 <th scope="col">TELEPHONE NUMBER</th>
-                                <th scope="col">PROPERTY</th>
                                 <th scope="col">BANK ACCOUNT</th>
                                 <th scope="col" />
                             </tr>
@@ -103,7 +102,6 @@ class OwnersList extends Component {
                                         <td>{owner.name} {owner.surname}</td>
                                         <td>{owner.email}</td>
                                         <td>{owner.phoneNumber}</td>
-                                        <td></td>
                                         <td>{owner.bankAccount}</td>
                                         <td className="pointer-cursor">
                                             <NavLink

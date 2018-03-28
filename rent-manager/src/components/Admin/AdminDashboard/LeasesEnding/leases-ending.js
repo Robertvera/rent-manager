@@ -38,13 +38,15 @@ class LeasesEnding extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.leasesEnding.map(lease => {
+                                            {
+                                                this.state.leasesEnding.map(lease => {
                                                 let endingDate = moment((new Date(`${lease.ending}`)).toString()).format('DD-MMM-YYYY').toString()
                                                 return  <tr key={lease._id}>
                                                             <td>{lease.property.reference}</td>
                                                             <td>{endingDate}</td>
                                                         </tr>
-                                            })}                                            
+                                            })
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
