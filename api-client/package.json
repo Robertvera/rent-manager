@@ -4,7 +4,7 @@
   "description": "Api client for rent manager app",
   "main": "src/index.js",
   "scripts": {
-    "test": "tests",
+    "test": "mocha tests",
     "build": "npx babel src/index.js --out-file dist/index.js --presets=es2015"
   },
   "keywords": [
@@ -15,7 +15,9 @@
   "author": "Robert Vera",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "chai": "^4.1.2",
+    "dotenv": "^5.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

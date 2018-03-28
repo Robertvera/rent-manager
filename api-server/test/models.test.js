@@ -5,7 +5,7 @@ const { Tenant, Lease, Property, Owner, Payment, Transfer, Deduction } = require
 
 describe('models', () => {
     before(() => {
-        return mongoose.connect('mongodb://localhost/rent-manager-models-test')
+        return mongoose.connect('mongodb://robert:admin123@ds111319.mlab.com:11319/tests-rent-manager')
     })
 
     describe('create a lease', () => {
