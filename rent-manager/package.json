@@ -1,0 +1,27 @@
+{
+  "name": "rent-manager",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^5.0.1",
+    "feather-icons": "^4.7.0",
+    "firebase": "^4.12.0",
+    "moment": "^2.21.0",
+    "mongoose": "^5.0.10",
+    "react": "^16.2.0",
+    "react-bootstrap4-modal": "^1.2.2",
+    "react-dom": "^16.2.0",
+    "react-feather": "^1.0.8",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "rent-manager-api-client": "file:../api-client",
+    "sweetalert2": "^7.17.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

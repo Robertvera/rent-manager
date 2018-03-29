@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin-leases-add</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
+
+        <ul class="navbar-nav px-5">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">
+                    <span data-feather="log-out"></span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="activity"></span>
+                                Overview
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="home"></span>
+                                Properties
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Leases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Tenants
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="dollar-sign"></span>
+                                Payments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="user"></span>
+                                Owners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="credit-card"></span>
+                                Transfers
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- MAIN SCREEN -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <form class="col-7  p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <!-- PROPERTY -->
+                                    <div class="form-group col-12">
+                                        <label for="property">Property</label>
+                                        <input type="text" class="form-control" id="property" aria-describedby="property" placeholder="property" value="GUARDIA I">
+                                    </div>
+                                    <!-- STARTING DATE, ENDING DATE, PRICE -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="starting-date">Starting date</label>
+                                        <input type="text" class="form-control" id="starting-date" placeholder="Starting date" value="12/08/1990">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="ending-date">Ending date</label>
+                                        <input type="text" class="form-control" id="ending-date" placeholder="Ending date" value="12/12/1990">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="price">Price</label>
+                                        <input type="text" class="form-control" id="price" placeholder="Price" value="1.200 €">
+                                    </div>
+
+                                    <!-- DEPOSIT, SQM, NEIGHBOURHOOD -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="deposit">Deposit</label>
+                                        <input type="text" class="form-control" id="deposit" placeholder="Deposit" value="2.400 €">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="sqm">Deposit</label>
+                                        <input type="text" class="form-control" id="sqm" placeholder="SQM" value="85">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <label for="credit-card">Neighbourhood</label>
+                                        <select class="custom-select" name="neighbourhood">
+                                            <option value="barceloneta">Barceloneta</option>
+                                            <option value="born">Born</option>
+                                            <option value="eixample">Eixample</option>
+                                            <option value="gothic">Gothic</option>
+                                            <option value="gracia">Gràcia</option>
+                                            <option value="poble-nou">Poble Nou</option>
+                                            <option value="raval">Raval</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- TENANT -->
+                        <h4 class="col-7">TENANT</h4>
+                        <form class="col-7 p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <!-- NAME, SURNAME -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Name" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="surname">Surname</label>
+                                        <input type="text" class="form-control" id="surname" placeholder="Surname" value="">
+                                    </div>
+                                    <!-- ID, NATIONALITY -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="passport">ID/Passport</label>
+                                        <input type="text" class="form-control" id="passport" placeholder="ID/Passport" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nationality">Nationality</label>
+                                        <input type="text" class="form-control" id="nationality" placeholder="Nationality" value="">
+                                    </div>
+                                    <!-- TELEPHONE, EMAIL -->
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="telephone">Telephone</label>
+                                        <input type="text" class="form-control" id="telephone" placeholder="Telephone" value="">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                        <label for="email">e-mail</label>
+                                        <input type="text" class="form-control" id="email" placeholder="example@email.com" value="">
+                                    </div>
+                                    <!-- ADD BUTTON -->
+                                    <button type="button" class="btn btn-success col-1 ml-3 mb-5">Add</button>                                    
+                                </div>
+                            </div>
+                        </form>
+                        <!-- SAVE BUTTON -->
+                        <div class="container-fluid col-7 p-0">
+                            <div class="row justify-content-center">
+                                <button type="button" class="btn btn-danger col-3 mb-5">SAVE</button>
+                            </div>
+                        </div>                        
+            </main>
+            </div>
+            </div>
+
+            <!-- Bootstrap core JavaScript  -->
+            <script src="../../vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+            <script src="../../vendor/popper/popper.min.js"></script>
+            <script src="../../vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+            <!-- Icons -->
+            <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+            <script>
+                feather.replace()
+            </script>
+</body>
+
+</html>

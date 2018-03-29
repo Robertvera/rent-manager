@@ -1,0 +1,17 @@
+.jumbotron {
+    background-image:url('./img/ny.jpg');
+    background-size: cover;
+    height: 500px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.profile {
+    height: 350px;
+}
+
+.warning {
+    color: red;
+}

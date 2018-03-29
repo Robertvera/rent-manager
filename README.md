@@ -16,7 +16,7 @@ Owners section is a simple site where the owners can check the status of their p
 
 - ADMINS
 
-Site for properties administrators. In this section the admin can add properties to the portfolio, manage lease contracts, payments, owners, tenants and transfers. All the users (tenants and owners) are created by the adminstrator.
+Site for properties administrators. In this section the admin can add properties to the portfolio, manage lease contracts, payments, owners and tenants. All the users (tenants and owners) are created by the adminstrator.
 
 ### TECHNOLOGIES
 
@@ -28,7 +28,14 @@ Site for properties administrators. In this section the admin can add properties
 - MONGOOSE: Database management
 - MOCHA: Testing
 - SURGE: Deployment
-- MLAB: DATABASE HOSTING
+- MLAB: Database hosting
+- FIREBASE: Images hosting management
+
+![alt text](/docs/techs.png "techs")
+
+### USER CASES
+
+![alt text](/docs/UserCases.jpg "User cases")
 
 ### [MOCK UP](/docs/mock-up-web.pdf)
 
@@ -37,7 +44,7 @@ Site for properties administrators. In this section the admin can add properties
 
 ### DESIGN - UML
 
-![alt text](/docs/design-uml.png "Design UML")
+![alt text](/docs/design-uml.jpg "Design UML")
 
 ### COMPONENTS MAP
 
@@ -46,5 +53,9 @@ Site for properties administrators. In this section the admin can add properties
 ### DEVELOPMENT TIMELINE
 
 ![alt text](/docs/timeline.png "Timeline")
+
+[Heroku](https://floating-spire-50658.herokuapp.com)
+
+[Surge](http://rent-manager.surge.sh/)
 
 

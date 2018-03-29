@@ -1,0 +1,44 @@
+body {
+  font-size: .875rem;
+  /* background-color: #FAFCFE; */
+  /* background-color: #FAFCFE;
+  background-image: -webkit-linear-gradient(100deg, rgb(179, 212, 245) 35%, #FAFCFE 35%);
+  min-height: 400px; */
+  background: -webkit-linear-gradient(30deg, rgb(196, 238, 238) 10%, #efefef 90%);
+  background: linear-gradient(30deg, rgb(196, 238, 238) 10%, #efefef 90%);
+  font-family: 'Raleway', sans-serif;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+
+/*
+* Utilities
+*/
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+/*
+* Property Box
+*/  
+
+.card-text {
+  font-size: 24px;
+}
+
+.numbers {
+  font-size: 32px;
+}
+
+.details {
+  font-size: 24px;
+}
+
+#card-holder-info {
+  font-size: 10px;
+}

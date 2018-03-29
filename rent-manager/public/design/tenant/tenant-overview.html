@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tenant Overview</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top flex-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 pt-4 text-center" href="#">Rent Manager</a>
+
+        <ul class="navbar-nav px-5">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#"><span data-feather="log-out"></span></a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav class="col-md-2 col-sm-12 col-lg-2 bg-light d-block sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="activity"></span>
+                                Overview
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="dollar-sign"></span>
+                                Payments
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- MAIN SCREEN -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
+
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+
+                        <div class="alert alert-danger col-11 text-center" role="alert">
+                            You have pending payments
+                        </div>
+
+                        <div class="card col-lg-5 col-sm-12 m-3 p-0">
+                            <img class="card-img-top" src="../img/apartment.jpg" alt="Card image cap">
+                            <div class="card-body pt-5">
+                                <h6 class="card-title text-center">PROPERTY</h6>
+                                <p class="card-text text-center">Pl. Catalunya 10, 2º 2ª 08001 Barcelona</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-sm-12 col-md-12 p-0 m-3">
+
+                            <div class="card col-12">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">
+                                        TENANTS
+                                    </h6>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Mark Otto</td>
+                                                <td>452456345</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jacob Thornton</td>
+                                                <td>453452345</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Larry the Bird</td>
+                                                <td>8347509384</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+                            <div class="card col-12 my-3">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">RENTAL PRICE</h6>
+                                    <p class="card-text numbers text-center">1.200 €/mo</p>
+                                </div>
+                            </div>
+
+                            <div class="card col-12 my-3">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">DEPOSIT</h6>
+                                    <p class="card-text numbers text-center">2.400 €</p>
+                                </div>
+                            </div>
+
+                            <div class="card col-12">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">LEASE ID</h6>
+                                    <p class="card-text text-center">ref: 9374983749582</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        
+                            <div class="card col-12 col-lg-5 col-md-5 mx-3 mb-5" id="starting-date">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">STARTING DATE</h6>
+                                    <p class="card-text numbers text-center">24/09/1999</p>
+                                </div>
+                            </div>
+
+                            <div class="card col-12 col-lg-5 col-md-5 mx-3 mb-5" id="ending-date">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center">ENDING DATE</h6>
+                                    <p class="card-text numbers text-center">24/12/2000</p>
+                                </div>
+                            </div>
+                        
+
+
+
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../../vendor/popper/popper.min.js"></script>
+    <script src="../../vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+</body>
+
+</html>
