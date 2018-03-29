@@ -18,7 +18,6 @@ class PaymentsList extends Component {
     componentDidMount = () => {
         rentManagerApi.getPayments()
             .then(payments => {
-                console.log(payments)
                 this.setState({ payments })
             })
     }

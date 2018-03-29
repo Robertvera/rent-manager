@@ -78,7 +78,6 @@ class AdminEditProperties extends Component {
             if (result.value) {
                 rentManagerApi.updateProperty(reference, ownerFix, address, roomsInt, sqmInt, priceInt, neighbourhood, picture, status)
                 .then((result)=> {
-                    console.log(result)
                     if (result.data.status === 'OK') {
                         swal({
                             title: 'Property updated!',

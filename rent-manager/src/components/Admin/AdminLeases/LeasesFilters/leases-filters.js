@@ -15,14 +15,6 @@ class LeasesFilters extends Component {
         this.props.onFilterByStatus(status)
     }
 
-    // keepStarting = (starting) => {
-    //     this.props.onFilterByStarting(starting)
-    // }
-
-    // keepEnding = (ending) => {
-    //     this.props.onFilterByEnding(ending)
-    // }
-
     keepQuery = (query) => {
         this.props.onFilterByQuery(query)
     }
@@ -41,18 +33,7 @@ class LeasesFilters extends Component {
                             <option value={true}>Active</option>
                             <option value={false}>Closed</option>
                         </select>
-                        {/* <input 
-                        type="date" 
-                        className="form-control col-lg-2 col-md-5 col-sm-12" 
-                        name="starting-date"
-                        onChange={(e)=> {this.keepStarting(e.target.value)}}
-                        />
-                        <input 
-                        type="date" 
-                        className="form-control col-lg-2 col-md-5 col-sm-12" 
-                        name="ending-date"
-                        onChange={(e)=> {this.keepEnding(e.target.value)}}
-                        /> */}
+                        
                         <input 
                         type="text" 
                         className="form-control col-lg-2 col-md-5 col-sm-12" 

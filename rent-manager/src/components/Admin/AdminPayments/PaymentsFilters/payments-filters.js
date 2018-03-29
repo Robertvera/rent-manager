@@ -23,10 +23,6 @@ class PaymentsFilters extends Component {
         this.props.onFilterByEnding(ending)
     }
 
-    // keepQuery = (query) => {
-    //     this.props.onFilterByQuery(query)
-    // }
-
     render() {
         return (
             <div className="card col-12 py-3">

@@ -89,7 +89,6 @@ class AdminEditLeases extends Component {
     
         rentManagerApi.updateLease(_id, property._id, tenants, active, starting, ending, price, deposit)
           .then((result) => {
-            console.log(result)
             if (result.status === 'OK') {
               swal({
                 title: 'Lease updated!',
@@ -273,11 +272,11 @@ class AdminEditLeases extends Component {
                           onChange={this.handleChangeTenants}
                         />
                       </div>
-                      <PlusSquare
+                      Click to register the new tenant&nbsp;&nbsp;<PlusSquare
                         onClick={(e) => {
                           e.preventDefault;
                           this.registerTenant();
-                        }}
+                        }} 
                       />
                     </div>
                   </div>
@@ -286,8 +285,9 @@ class AdminEditLeases extends Component {
 
 
               {/* ADD BUTTON */}
-              <div className="col-7">
-                <PlusCircle
+              <div className="col-7 mb-5">
+              <hr/>
+              Click to add a new tenant&nbsp;&nbsp;<PlusCircle
                   onClick={(e) => {
                     e.preventDefault;
                     this.addTenant();

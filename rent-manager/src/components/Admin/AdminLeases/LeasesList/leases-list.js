@@ -18,20 +18,9 @@ class LeasesList extends Component {
     componentDidMount = () => {
         
         rentManagerApi.getLeases()
-            .then(leases => {
-                console.log(leases)
+            .then(leases => {                
                 this.setState({ leases })
-            })  
-        
-            // for (let i = 0; this.state.leases.length; i++) {
-            //     rentManagerApi.checkLeaseStatus(this.state.leases[i]._id)
-            // }
-
-            // rentManagerApi.getLeases()
-            // .then(leases => {
-            //     console.log(leases)
-            //     this.setState({ leases })
-            // })      
+            })                         
         
     }
 
@@ -46,7 +35,6 @@ class LeasesList extends Component {
                     if(nextProps.query) {
                         rentManagerApi.getLeaseSearch(nextProps.status, nextProps.query)
                             .then(filteredLeases => {
-                                console.log(filteredLeases)
                                 this.setState({leases: filteredLeases})
                             })
                     }

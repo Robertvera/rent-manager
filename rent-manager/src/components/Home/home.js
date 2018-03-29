@@ -76,8 +76,6 @@ class Home extends Component {
     
     storeLeaseId = (lease) => {
         sessionStorage.setItem('leaseId', (lease.data.data._id))
-
-        console.log(sessionStorage)
     }
 
     ownerLogin = (ownerId, password) => {
@@ -96,8 +94,6 @@ class Home extends Component {
 
     storeOwnerId = (owner) => {
         sessionStorage.setItem('ownerId', (owner.data.data.documentId))
-
-        console.log(sessionStorage)
     }
 
     loginWarning = () => {

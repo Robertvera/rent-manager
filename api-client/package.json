@@ -2,7 +2,7 @@
   "name": "rent-manager-api-client",
   "version": "1.0.0",
   "description": "Api client for rent manager app",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha tests",
     "build": "npx babel src/index.js --out-file dist/index.js --presets=es2015"

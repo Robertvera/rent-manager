@@ -105,10 +105,7 @@ class AdminAddLeases extends Component {
 
     const starting = moment(this.state.lease.starting, "YYYY-MM-DD").format();
 
-    const ending = moment(this.state.lease.ending, "YYYY-MM-DD").format();
-
-    console.log(ending)
-    console.log(starting)
+    const ending = moment(this.state.lease.ending, "YYYY-MM-DD").format();    
 
     const { tenants } = this.state
 
@@ -116,7 +113,6 @@ class AdminAddLeases extends Component {
 
     rentManagerApi.createLease(property, tenants, active, starting, ending, price, deposit)
       .then((result) => {
-        console.log(result.data)
         if (result.status === 'OK') {
           // CREATE PAYMENTS
           const _starting = moment(this.state.lease.starting, "YYYY-MM-DD")

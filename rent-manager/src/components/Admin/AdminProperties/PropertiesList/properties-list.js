@@ -45,7 +45,6 @@ class PropertiesList extends Component {
                     if(nextProps.query) {
                         rentManagerApi.getPropertySearch(nextProps.status, nextProps.hood, nextProps.query)
                             .then(filteredProperties => {
-                                console.log(filteredProperties)
                                 this.setState({properties: filteredProperties})
                             })
                     }

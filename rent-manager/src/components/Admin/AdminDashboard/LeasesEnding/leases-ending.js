@@ -15,8 +15,7 @@ class LeasesEnding extends Component {
       }
 
     componentDidMount = () => {
-        rentManagerApi.getLeasesEndingSoon().then(leases => {
-            console.log(leases)
+        rentManagerApi.getLeasesEndingSoon().then(leases => {            
             this.setState({
                 leasesEnding: leases
             })

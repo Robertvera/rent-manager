@@ -44,15 +44,18 @@ var rentManagerApi = {
             return data.data.data;
         });
     },
-    createOwner: function createOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
-        return axios.post(this._url() + '/owner', { documentId: documentId, name: name, surname: surname, email: email, phoneNumber: phoneNumber, nationality: nationality, bankAccount: bankAccount, password: password }).then(function (data) {
-            return data.data.data;
+    createOwner: function createOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
+        return axios.post(this._url() + '/owner', { documentId: documentId, name: name, surname: surname, email: email, phoneNumber: phoneNumber, nationality: nationality, bankAccount: bankAccount }).then(function (data) {
+            return data.data;
         });
     },
-    updateOwner: function updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount, password) {
-        return axios.put(this._url() + '/owner/' + documentId, { name: name, surname: surname, email: email, phoneNumber: phoneNumber, nationality: nationality, bankAccount: bankAccount, password: password }).then(function (data) {
-            return data.data.data;
+    updateOwner: function updateOwner(documentId, name, surname, email, phoneNumber, nationality, bankAccount) {
+        return axios.put(this._url() + '/owner/' + documentId, { name: name, surname: surname, email: email, phoneNumber: phoneNumber, nationality: nationality, bankAccount: bankAccount }).then(function (data) {
+            return data.data;
         });
+    },
+    checkLoginOwner: function checkLoginOwner(documentId, password) {
+        return axios.put(this._url() + '/owner/login/' + documentId, { password: password });
     },
     getOneOwner: function getOneOwner(documentId) {
         return axios.get(this._url() + '/owner/' + documentId).then(function (data) {
@@ -76,6 +79,11 @@ var rentManagerApi = {
     },
     getPropertiesByStatus: function getPropertiesByStatus(status) {
         return axios.get(this._url() + '/properties-by-status/' + status).then(function (data) {
+            return data.data.data;
+        });
+    },
+    getPropertiesByOwner: function getPropertiesByOwner(id) {
+        return axios.get(this._url() + '/properties-by-owner/' + id).then(function (data) {
             return data.data.data;
         });
     },
@@ -112,7 +120,7 @@ var rentManagerApi = {
     },
     createPayment: function createPayment(concept, type, lease, property, status, dueDate, paymentDate, amount) {
         return axios.post(this._url() + '/payment', { concept: concept, type: type, lease: lease, property: property, status: status, dueDate: dueDate, paymentDate: paymentDate, amount: amount }).then(function (data) {
-            return data.data.data;
+            return data.data;
         });
     },
     updatePayment: function updatePayment(id, concept, type, lease, property, status, dueDate, paymentDate, amount) {
@@ -130,6 +138,11 @@ var rentManagerApi = {
             return data.data.data;
         });
     },
+    getPaymentsByProperty: function getPaymentsByProperty(id) {
+        return axios.get(this._url() + '/payments-by-property/' + id).then(function (data) {
+            return data.data.data;
+        });
+    },
     getPaymentSearch: function getPaymentSearch(query) {
         return axios.get(this._url() + '/payments/' + query).then(function (data) {
             return data.data.data;
@@ -137,6 +150,11 @@ var rentManagerApi = {
     },
     getPaymentsByStatus: function getPaymentsByStatus(status) {
         return axios.get(this._url() + '/payments-by-status/' + status).then(function (data) {
+            return data.data.data;
+        });
+    },
+    getPaymentsByDate: function getPaymentsByDate(status, starting, ending) {
+        return axios.get(this._url() + '/payments-by-date/' + status + '&' + starting + '&' + ending).then(function (data) {
             return data.data.data;
         });
     },
@@ -150,9 +168,9 @@ var rentManagerApi = {
             return data.data.data;
         });
     },
-    createLease: function createLease(property, tenants, password, active, starting, ending, price, deposit) {
-        return axios.post(this._url() + '/lease', { property: property, tenants: tenants, password: password, active: active, starting: starting, ending: ending, price: price, deposit: deposit }).then(function (data) {
-            return data.data.data;
+    createLease: function createLease(property, tenants, active, starting, ending, price, deposit) {
+        return axios.post(this._url() + '/lease', { property: property, tenants: tenants, active: active, starting: starting, ending: ending, price: price, deposit: deposit }).then(function (data) {
+            return data.data;
         });
     },
     updateLease: function updateLease(id, property, tenants, active, starting, ending, price, deposit) {
@@ -165,13 +183,33 @@ var rentManagerApi = {
             return data.data.data;
         });
     },
-    getLeaseSearch: function getLeaseSearch(query) {
-        return axios.get(this._url() + '/leases/' + query).then(function (data) {
+    checkLeaseStatus: function checkLeaseStatus(id) {
+        return axios.put(this._url() + '/lease-check-status/' + id).then(function (data) {
+            return data.data.data;
+        });
+    },
+    getLeaseSearch: function getLeaseSearch(status, query) {
+        return axios.get(this._url() + '/leases/' + status + '&' + query).then(function (data) {
+            return data.data.data;
+        });
+    },
+    getLeasesByStatus: function getLeasesByStatus(status) {
+        return axios.get(this._url() + '/leases-by-status/' + status).then(function (data) {
             return data.data.data;
         });
     },
     getLeasesEndingSoon: function getLeasesEndingSoon() {
         return axios.get(this._url() + '/leases-ending').then(function (data) {
+            return data.data.data;
+        });
+    },
+    getCurrentLeasesByProperty: function getCurrentLeasesByProperty(id) {
+        return axios.get(this._url() + '/current-leases-by-property/' + id).then(function (data) {
+            return data.data.data;
+        });
+    },
+    getLeasesByProperty: function getLeasesByProperty(id) {
+        return axios.get(this._url() + '/leases-by-property/' + id).then(function (data) {
             return data.data.data;
         });
     },

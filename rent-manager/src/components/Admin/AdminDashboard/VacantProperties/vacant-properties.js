@@ -15,7 +15,6 @@ class VacantProperties extends Component {
 
     componentDidMount = () => {
         rentManagerApi.getPropertiesByStatus('free').then(properties => {
-            console.log(properties)
             this.setState({
                 vacantProperties: properties
             })

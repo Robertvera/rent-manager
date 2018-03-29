@@ -17,17 +17,14 @@ class TenantCheckout extends Component {
     componentDidMount = () => {
         rentManagerApi.getOnePayment(this.props.paymentId)
             .then(payment=> {
-                console.log(payment)
                 this.setState({paymentInfo: payment})
             })
     }
 
     updateStatus = () => {
-        console.log('hola updatestatus')
         let paymentDate = new Date
         rentManagerApi.updatePayment(this.props.paymentId, this.state.paymentInfo.concept, this.state.paymentInfo.type, this.state.paymentInfo.lease, this.state.paymentInfo.property, 'paid', this.state.paymentInfo.dueDate, paymentDate, this.state.paymentInfo.amount)
             .then(payment => {
-                console.log(payment)
                 if (payment.status === 'OK') {
                     swal({
                                     title: 'Payment complete!',
